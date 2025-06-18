@@ -6,7 +6,7 @@ const FloatingFacebookIcon = () => {
   return (
     <div className="fixed bottom-6 left-6 z-50">
       <a
-        href="https://www.facebook.com/thaiduong.le.123276"
+        href="https://www.facebook.com/MidoriHola"
         target="_blank"
         rel="noopener noreferrer"
         className="group flex items-center justify-center w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-float"
