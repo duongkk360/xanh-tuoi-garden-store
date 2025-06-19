@@ -1,4 +1,3 @@
-
 export interface CareGuide {
   id: string;
   title: string;
@@ -306,159 +305,184 @@ export const careGuides: CareGuide[] = [
   },
   {
     id: '9',
-    title: 'Thiết kế vườn mini trong nhà',
+    title: 'Thiết kế vườn mini trong nhà - Không gian xanh hoàn hảo',
     slug: 'thiet-ke-vuon-mini-trong-nha',
-    excerpt: 'Hướng dẫn tạo một khu vườn mini hoàn hảo trong không gian sống. Mang thiên nhiên vào ngôi nhà của bạn.',
+    excerpt: 'Hướng dẫn tạo một khu vườn mini hoàn hảo trong không gian sống. Mang thiên nhiên vào ngôi nhà của bạn một cách tinh tế và hiệu quả.',
     content: `
-      <h2>Quy hoạch không gian vườn mini</h2>
-      <p>Vườn mini trong nhà cần được bố trí hợp lý để tận dụng tối đa không gian và ánh sáng tự nhiên. Xác định vị trí có ánh sáng tốt nhất trong nhà.</p>
+      <h2>Quy hoạch không gian vườn mini thông minh</h2>
+      <p>Vườn mini trong nhà cần được bố trí hợp lý để tận dụng tối đa không gian và ánh sáng tự nhiên. Việc quy hoạch đúng đắn sẽ tạo ra một hệ sinh thái nhỏ hoàn chỉnh trong chính ngôi nhà của bạn.</p>
 
-      <h3>Chọn vị trí lý tưởng</h3>
+      <h3>Phân tích và chọn vị trí lý tưởng</h3>
       <ul>
-        <li>Gần cửa sổ để nhận ánh sáng tự nhiên</li>
-        <li>Có thông gió tốt, không bị gió lùa</li>
-        <li>Dễ dàng chăm sóc và quan sát</li>
-        <li>Không cản trở sinh hoạt hàng ngày</li>
+        <li><strong>Gần cửa sổ:</strong> Để nhận ánh sáng tự nhiên tối đa, đặc biệt là ánh sáng sáng sớm</li>
+        <li><strong>Thông gió tốt:</strong> Không bị gió lùa nhưng vẫn có không khí lưu thông</li>
+        <li><strong>Dễ quan sát:</strong> Vị trí thuận tiện để chăm sóc và theo dõi cây hàng ngày</li>
+        <li><strong>Không cản trở:</strong> Không làm ảnh hưởng đến động tuyến sinh hoạt gia đình</li>
+        <li><strong>Gần nguồn nước:</strong> Thuận tiện cho việc tưới nước và vệ sinh</li>
       </ul>
 
-      <h3>Thiết kế theo tầng</h3>
-      <p>Sử dụng kệ nhiều tầng để tối ưu không gian. Đặt cây cao ở tầng dưới, cây thấp ở tầng trên. Tạo độ cao khác nhau để tăng tính thẩm mỹ.</p>
+      <h3>Thiết kế theo tầng và chiều sâu</h3>
+      <p>Sử dụng kệ nhiều tầng để tối ưu không gian theo chiều dọc. Đặt cây cao ở tầng dưới để tạo nền, cây trung bình ở tầng giữa, và cây nhỏ xinh ở tầng trên. Tạo độ cao khác nhau bằng cách sử dụng đế nâng, tạo cảm giác tự nhiên như trong rừng.</p>
 
-      <h3>Lựa chọn cây phù hợp</h3>
-      <p>Kết hợp cây lá và cây hoa, cây đứng và cây treo. Chọn cây có tốc độ phát triển khác nhau để duy trì cân bằng lâu dài.</p>
+      <h3>Lựa chọn và phối hợp cây</h3>
+      <p>Kết hợp hài hòa giữa cây lá xanh và cây có hoa màu sắc. Cây đứng thẳng kết hợp với cây treo tạo tầng lớp. Chọn cây có tốc độ phát triển khác nhau để duy trì cân bằng lâu dài. Ưu tiên cây có khả năng thanh lọc không khí như cây lưỡi hổ, cây spider plant.</p>
 
-      <h3>Hệ thống tưới nước tự động</h3>
-      <p>Có thể lắp đặt hệ thống tưới nhỏ giọt hoặc sử dụng chậu tự tưới để tiện chăm sóc khi đi vắng.</p>
+      <h3>Hệ thống tưới nước tự động hiện đại</h3>
+      <p>Lắp đặt hệ thống tưới nhỏ giọt với timer tự động để đảm bảo cây được tưới đều đặn. Sử dụng chậu tự tưới với hệ thống dự trữ nước cho những lúc đi vắng dài ngày. Bố trí hệ thống thoát nước hiệu quả để tránh ngập úng.</p>
 
-      <h3>Trang trí và phụ kiện</h3>
-      <p>Thêm đèn LED trang trí, sỏi màu, tượng nhỏ để tăng tính thẩm mỹ. Sử dụng chậu cùng màu sắc hoặc chất liệu để tạo sự thống nhất.</p>
+      <h3>Trang trí và phụ kiện thẩm mỹ</h3>
+      <p>Thêm đèn LED dây trang trí để tạo không khí ấm cúng vào buổi tối. Sử dụng sỏi màu, cát trang trí để tạo điểm nhấn. Bổ sung tượng nhỏ, đài phun nước mini để tăng tính thẩm mỹ. Sử dụng chậu cùng màu sắc hoặc chất liệu để tạo sự thống nhất.</p>
 
-      <h3>Bảo trì vườn mini</h3>
-      <p>Kiểm tra và chăm sóc định kỳ hàng tuần. Thay thế cây yếu kịp thời. Vệ sinh lá cây và khu vực trồng cây thường xuyên.</p>
+      <h3>Bảo trì và phát triển vườn mini</h3>
+      <p>Lập lịch kiểm tra và chăm sóc định kỳ hàng tuần. Thay thế cây yếu kịp thời để duy trì vẻ đẹp tổng thể. Vệ sinh lá cây và khu vực trồng cây thường xuyên. Bổ sung cây mới theo mùa để có sự đổi mới.</p>
+
+      <h3>Tối ưu hóa vi khí hậu</h3>
+      <p>Sử dụng khay nước để tăng độ ẩm không khí xung quanh cây. Nhóm các cây lại gần nhau để tạo vi khí hậu ẩm ướt. Sử dụng máy phun sương tự động vào những ngày khô hanh.</p>
     `,
     image_url: '/lovable-uploads/71996b5a-7b06-441d-9760-e67c64c01406.png',
     category: 'basics',
     created_at: '2024-02-15',
     featured: false,
-    read_time: 6,
+    read_time: 8,
     author: 'Kiến trúc sư Lan Phương',
-    tags: ['vườn mini', 'thiết kế', 'không gian xanh']
+    tags: ['vườn mini', 'thiết kế', 'không gian xanh', 'trang trí nội thất']
   },
   {
     id: '10',
-    title: 'Cây cảnh và phong thủy trong nhà',
+    title: 'Cây cảnh và phong thủy - Hài hòa năng lượng trong ngôi nhà',
     slug: 'cay-canh-va-phong-thuy-trong-nha',
-    excerpt: 'Tìm hiểu về ý nghĩa phong thủy của các loại cây cảnh và cách bố trí để thu hút may mắn, tài lộc.',
+    excerpt: 'Tìm hiểu sâu về ý nghĩa phong thủy của các loại cây cảnh và cách bố trí khoa học để thu hút may mắn, tài lộc và năng lượng tích cực.',
     content: `
-      <h2>Nguyên tắc phong thủy với cây cảnh</h2>
-      <p>Theo phong thủy, cây cảnh không chỉ trang trí mà còn giúp cân bằng năng lượng trong nhà. Mỗi loại cây mang ý nghĩa và tác dụng riêng.</p>
+      <h2>Triết lý phong thủy và cây cảnh trong đời sống</h2>
+      <p>Theo triết lý phong thủy cổ xưa, cây cảnh không chỉ là vật trang trí đơn thuần mà còn là những "cầu nối" giúp cân bằng năng lượng (khí) trong không gian sống. Mỗi loại cây mang trong mình những đặc tính năng lượng riêng biệt, có thể ảnh hưởng tích cực đến sức khỏe, tài vận và các mối quan hệ.</p>
 
-      <h3>Cây cảnh hợp mệnh</h3>
+      <h3>Cây cảnh phù hợp theo ngũ hành</h3>
       <ul>
-        <li><strong>Mệnh Mộc:</strong> Cây trúc, cây sung, cây đề</li>
-        <li><strong>Mệnh Hỏa:</strong> Cây hồng môn, cây phát tài</li>
-        <li><strong>Mệnh Thổ:</strong> Cây kim ngân, cây ngọc bích</li>
-        <li><strong>Mệnh Kim:</strong> Cây lưỡi hổ, cây kim tiền</li>
-        <li><strong>Mệnh Thủy:</strong> Cây phú quý, cây thủy sinh</li>
+        <li><strong>Mệnh Mộc (1974, 1975, 1982, 1983...):</strong> Cây trúc, cây sung, cây đề - tăng cường sức mạnh bản mệnh</li>
+        <li><strong>Mệnh Hỏa (1976, 1977, 1984, 1985...):</strong> Cây hồng môn, cây phát tài - kích hoạt năng lượng sáng tạo</li>
+        <li><strong>Mệnh Thổ (1978, 1979, 1986, 1987...):</strong> Cây kim ngân, cây ngọc bích - ổn định và bình an</li>
+        <li><strong>Mệnh Kim (1980, 1981, 1988, 1989...):</strong> Cây lưỡi hổ, cây kim tiền - thu hút tài lộc</li>
+        <li><strong>Mệnh Thủy (1972, 1973, 1990, 1991...):</strong> Cây phú quý, cây thủy sinh - tăng cường trí tuệ</li>
       </ul>
 
-      <h3>Vị trí đặt cây theo phong thủy</h3>
-      <p>Cửa chính: đặt cây lớn để chặn khí xấu. Góc tài lộc (góc chéo cửa chính): cây kim tiền, cây phát tài. Phòng ngủ: tránh cây có gai, chọn cây thanh lọc không khí.</p>
+      <h3>Bản đồ phong thủy và vị trí đặt cây</h3>
+      <p><strong>Khu vực cửa chính:</strong> Đặt cây lớn như cây kim tiền hoặc cây phát tài để "chặn" khí xấu từ bên ngoài, chỉ cho phép năng lượng tích cực vào nhà. <strong>Góc tài lộc (góc chéo cửa chính):</strong> Vị trí quan trọng nhất, nên đặt cây kim tiền, cây ngọc bích hoặc cây phát tài để kích hoạt năng lượng thịnh vượng.</p>
 
-      <h3>Cây cảnh mang tài lộc</h3>
-      <p>Cây phát tài, cây kim tiền, cây ngọc bích được cho là thu hút tiền bạc. Cây trúc mang lại may mắn và thịnh vượng.</p>
+      <p><strong>Phòng khách:</strong> Trung tâm giao lưu, nên chọn cây có tán lá rộng như cây đề, cây thiên điểu để tạo không khí ấm cúng. <strong>Phòng ngủ:</strong> Tránh cây có gai như xương rồng, ưu tiên cây thanh lọc không khí như cây lô hội, cây spider plant để cải thiện chất lượng giấc ngủ.</p>
 
-      <h3>Những điều cần tránh</h3>
-      <p>Không đặt cây chết, cây bệnh trong nhà. Tránh cây có nhiều gai trong phòng ngủ. Không đặt quá nhiều cây làm âm khí quá nặng.</p>
+      <h3>Cây cảnh mang tài lộc và thịnh vượng</h3>
+      <p><strong>Cây kim tiền:</strong> Lá hình đồng xu, biểu tượng của sự giàu có, đặc biệt hiệu quả trong góc Đông Nam. <strong>Cây phát tài:</strong> Tên gọi đã nói lên ý nghĩa, lá xanh tươi tượng trưng cho sự phát triển không ngừng của tài chính. <strong>Cây ngọc bích:</strong> Màu xanh ngọc quý, mang lại may mắn trong đầu tư và kinh doanh.</p>
 
-      <h3>Chăm sóc cây theo nguyên tắc phong thủy</h3>
-      <p>Giữ cây luôn xanh tốt, cắt bỏ lá vàng ngay lập tức. Thay nước và vệ sinh chậu cây thường xuyên để giữ năng lượng tích cực.</p>
+      <h3>Những điều tuyệt đối cần tránh</h3>
+      <p><strong>Cây chết hoặc héo úa:</strong> Tạo ra năng lượng âm tính, ảnh hưởng xấu đến vận khí gia đình, cần loại bỏ ngay lập tức. <strong>Cây có gai trong phòng ngủ:</strong> Gây căng thẳng, ảnh hưởng đến giấc ngủ và mối quan hệ vợ chồng. <strong>Quá nhiều cây:</strong> Tạo âm khí quá nặng, đặc biệt nguy hiểm trong phòng ngủ.</p>
+
+      <h3>Nguyên tắc chăm sóc theo phong thủy</h3>
+      <p>Giữ cây luôn xanh tươi và khỏe mạnh để duy trì năng lượng tích cực. Cắt bỏ lá vàng, lá khô ngay lập tức vì chúng mang năng lượng suy thoái. Thay nước và vệ sinh chậu cây thường xuyên để năng lượng lưu thông tốt. Nói chuyện với cây và chăm sóc bằng tình yêu thương để tăng cường kết nối năng lượng.</p>
+
+      <h3>Lịch trồng cây theo âm lịch</h3>
+      <p>Trồng cây vào những ngày tốt theo âm lịch để tăng cường hiệu quả phong thủy. Tránh trồng cây vào ngày suy, ngày hạn để không mang năng lượng xấu vào nhà.</p>
     `,
     image_url: '/lovable-uploads/3d8436a2-face-4e0a-9080-7f11ceb6c900.png',
     category: 'basics',
     created_at: '2024-02-10',
     featured: false,
-    read_time: 5,
+    read_time: 10,
     author: 'Thầy Phong thủy Minh Tuấn',
-    tags: ['phong thủy', 'may mắn', 'tài lộc']
+    tags: ['phong thủy', 'may mắn', 'tài lộc', 'ngũ hành', 'năng lượng']
   },
   {
     id: '11',
-    title: 'Nhân giống cây cảnh tại nhà',
+    title: 'Nhân giống cây cảnh tại nhà - Từ nghiệp dư đến chuyên nghiệp',
     slug: 'nhan-giong-cay-canh-tai-nha',
-    excerpt: 'Học các phương pháp nhân giống cây cảnh đơn giản và hiệu quả. Tự tay tạo ra khu vườn phong phú từ những cây ban đầu.',
+    excerpt: 'Học các phương pháp nhân giống cây cảnh đơn giản và hiệu quả. Tự tay tạo ra khu vườn phong phú từ những cây ban đầu với kỹ thuật chuyên nghiệp.',
     content: `
-      <h2>Các phương pháp nhân giống phổ biến</h2>
-      <p>Có nhiều cách để nhân giống cây cảnh: gieo hạt, chiết cành, chia khóm, ghép cành. Mỗi phương pháp phù hợp với từng loại cây khác nhau.</p>
+      <h2>Tổng quan về nhân giống cây cảnh</h2>
+      <p>Nhân giống là nghệ thuật tạo ra những cây mới từ cây mẹ, giúp bạn mở rộng khu vườn một cách kinh tế và hiệu quả. Đây cũng là cách tuyệt vời để bảo tồn những giống cây quý hiếm hoặc có ý nghĩa đặc biệt.</p>
 
-      <h3>Nhân giống bằng chiết cành</h3>
+      <h3>Các phương pháp nhân giống phổ biến</h3>
       <ul>
-        <li>Chọn cành khỏe mạnh, không có hoa</li>
-        <li>Cắt cành dài 10-15cm, có 3-4 nút lá</li>
-        <li>Bỏ lá dưới, giữ lại 2-3 lá trên ngọn</li>
-        <li>Nhúng vào hormone tạo rễ (nếu có)</li>
-        <li>Cắm vào đất ẩm hoặc nước sạch</li>
+        <li><strong>Chiết cành (Cutting):</strong> Phương pháp phổ biến nhất, cắt cành để tạo cây mới</li>
+        <li><strong>Gieo hạt (Seeding):</strong> Từ hạt giống tự nhiên hoặc thu hoạch</li>
+        <li><strong>Chia khóm (Division):</strong> Tách cây mẹ thành nhiều cây con</li>
+        <li><strong>Ghép cành (Grafting):</strong> Kỹ thuật nâng cao, ghép cành tốt lên gốc khỏe</li>
+        <li><strong>Giâm lá (Leaf cutting):</strong> Tạo cây mới từ lá, phù hợp với sen đá</li>
       </ul>
 
-      <h3>Điều kiện thành công</h3>
-      <p>Nhiệt độ 20-25°C, độ ẩm cao, ánh sáng nhẹ. Tránh ánh sáng trực tiếp và gió mạnh. Giữ đất luôn ẩm nhưng không ngập nước.</p>
+      <h3>Kỹ thuật chiết cành chuyên nghiệp</h3>
+      <p><strong>Chọn cành:</strong> Cành khỏe mạnh, không có hoa, độ tuổi 6-12 tháng, không quá non hoặc quá già. <strong>Thời điểm:</strong> Mùa xuân hoặc đầu mùa hè khi cây đang trong giai đoạn sinh trưởng mạnh. <strong>Chuẩn bị cành:</strong> Cắt cành dài 10-15cm, có 3-4 nút lá, cắt nghiêng 45 độ dưới nút lá.</p>
 
-      <h3>Nhân giống bằng gieo hạt</h3>
-      <p>Chọn hạt tươi, ngâm nước 24 giờ trước khi gieo. Sử dụng đất gieo hạt chuyên dụng, tơi xốp. Gieo không quá sâu, che ẩm bằng màng plastic.</p>
+      <p><strong>Xử lý cành:</strong> Bỏ lá dưới, giữ lại 2-3 lá trên ngọn, cắt nhỏ lá lớn để giảm bay hơi. Nhúng vào hormone tạo rễ (IBA hoặc NAA) nếu có. <strong>Môi trường giâm:</strong> Đất giâm tơi xốp (cát + mùn dừa), độ ẩm vừa phải, nhiệt độ 20-25°C.</p>
 
-      <h3>Chăm sóc cây con</h3>
-      <p>Tưới nước nhẹ nhàng, tránh làm đổ cây. Bón phân loãng khi cây có 4-6 lá thật. Ghép chậu riêng khi rễ đã phát triển tốt.</p>
+      <h3>Điều kiện môi trường tối ưu</h3>
+      <p><strong>Nhiệt độ:</strong> 20-25°C là lý tưởng cho hầu hết các loại cây. <strong>Độ ẩm:</strong> 70-80%, sử dụng màng che hoặc hộp nhựa trong để giữ ẩm. <strong>Ánh sáng:</strong> Ánh sáng tán xạ, tránh ánh sáng trực tiếp gây héo. <strong>Thông gió:</strong> Nhẹ nhàng để tránh nấm mốc nhưng không làm khô cành.</p>
 
-      <h3>Chia sẻ và trao đổi</h3>
-      <p>Khi thành công, bạn có thể chia sẻ cây con với bạn bè. Tham gia các nhóm yêu cây cảnh để trao đổi kinh nghiệm và cây giống.</p>
+      <h3>Phương pháp gieo hạt hiệu quả</h3>
+      <p><strong>Chuẩn bị hạt:</strong> Chọn hạt tươi, đầy đặn, ngâm nước ấm 24 giờ để kích thích nảy mầm. <strong>Đất gieo:</strong> Sử dụng đất gieo hạt chuyên dụng, tơi xốp, thoát nước tốt. <strong>Kỹ thuật gieo:</strong> Gieo không quá sâu (2-3 lần kích thước hạt), che ẩm bằng màng plastic có thủng lỗ.</p>
+
+      <h3>Chăm sóc cây con chuyên nghiệp</h3>
+      <p><strong>Tưới nước:</strong> Sử dụng bình xịt tưới nhẹ nhàng, tránh làm đổ cây non. Giữ độ ẩm đất ổn định nhưng không ngập úng. <strong>Dinh dưỡng:</strong> Bón phân loãng (1/4 nồng độ bình thường) khi cây có 4-6 lá thật. <strong>Ghép chậu:</strong> Chuyển cây vào chậu riêng khi rễ dài 3-5cm và có ít nhất 4 lá thật.</p>
+
+      <h3>Xây dựng cộng đồng chia sẻ</h3>
+      <p>Khi thành công trong nhân giống, bạn có thể tham gia các nhóm yêu cây cảnh để trao đổi kinh nghiệm và cây giống. Tổ chức những buổi gặp mặt chia sẻ cây con với bạn bè, hàng xóm. Ghi chép quá trình nhân giống để tích lũy kinh nghiệm và chia sẻ với cộng đồng.</p>
+
+      <h3>Khắc phục sự cố thường gặp</h3>
+      <p><strong>Cành bị thối:</strong> Do quá ẩm, cải thiện thoát nước và giảm tưới. <strong>Không ra rễ:</strong> Kiểm tra nhiệt độ, độ ẩm và chất lượng cành chiết. <strong>Cây con chết:</strong> Thường do shock khi ghép chậu, cần tập quen dần với môi trường mới.</p>
     `,
     image_url: '/lovable-uploads/ff452d84-50fa-4268-a28f-45adef1a3b3e.png',
     category: 'basics',
     created_at: '2024-02-05',
     featured: false,
-    read_time: 6,
+    read_time: 9,
     author: 'Kỹ sư Nông nghiệp Thái Sơn',
-    tags: ['nhân giống', 'chiết cành', 'gieo hạt']
+    tags: ['nhân giống', 'chiết cành', 'gieo hạt', 'kỹ thuật', 'chuyên nghiệp']
   },
   {
     id: '12',
-    title: 'Cây cảnh mùa đông - Chăm sóc đặc biệt',
+    title: 'Cây cảnh mùa đông - Chiến lược chăm sóc toàn diện',
     slug: 'cay-canh-mua-dong-cham-soc-dac-biet',
-    excerpt: 'Hướng dẫn chăm sóc cây cảnh trong mùa đông lạnh giá. Bảo vệ cây khỏi rét đậm và duy trì sự phát triển.',
+    excerpt: 'Hướng dẫn chi tiết chăm sóc cây cảnh trong mùa đông lạnh giá. Bảo vệ cây khỏi rét đậm và duy trì sự phát triển khỏe mạnh qua mùa khó khăn.',
     content: `
-      <h2>Thách thức của mùa đông với cây cảnh</h2>
-      <p>Mùa đông mang đến nhiều thách thức: nhiệt độ thấp, ít ánh sáng, không khí khô hanh. Cây cảnh cần được chăm sóc đặc biệt để vượt qua mùa khó khăn này.</p>
+      <h2>Hiểu biết về thách thức mùa đông</h2>
+      <p>Mùa đông mang đến nhiều thách thức nghiêm trọng cho cây cảnh: nhiệt độ thấp có thể làm đóng băng tế bào, ít ánh sáng mặt trời ảnh hưởng đến quá trình quang hợp, không khí khô hanh do hệ thống sưởi, và chu kỳ sinh trưởng chậm lại của thực vật.</p>
 
-      <h3>Điều chỉnh tưới nước mùa đông</h3>
+      <h3>Phân loại cây theo khả năng chịu lạnh</h3>
       <ul>
-        <li>Giảm tần suất tưới xuống 1-2 lần/tuần</li>
-        <li>Kiểm tra độ ẩm đất trước khi tưới</li>
-        <li>Sử dụng nước ấm (nhiệt độ phòng)</li>
-        <li>Tưới vào buổi sáng để cây có thời gian khô</li>
+        <li><strong>Cây chịu lạnh tốt:</strong> Cây lưỡi hổ, cây kim tiền, cây trúc - có thể chịu 5-10°C</li>
+        <li><strong>Cây nhạy cảm với lạnh:</strong> Cây phát tài, cây hồng môn - cần nhiệt độ trên 15°C</li>
+        <li><strong>Cây nhiệt đới:</strong> Cây thiên điểu, cây monstera - cần nhiệt độ trên 18°C</li>
+        <li><strong>Cây sa mạc:</strong> Xương rồng, sen đá - chịu lạnh tốt nhưng sợ ẩm ướt</li>
       </ul>
 
-      <h3>Bảo vệ cây khỏi lạnh</h3>
-      <p>Di chuyển cây vào trong nhà hoặc nơi có mái che. Sử dụng đèn sưởi hoặc thảm ấm cho khu vực trồng cây. Bọc chậu cây bằng vật liệu giữ nhiệt.</p>
+      <h3>Chiến lược tưới nước mùa đông</h3>
+      <p><strong>Tần suất tưới:</strong> Giảm xuống 50-70% so với mùa hè, từ 3 lần/tuần xuống 1-2 lần/tuần. <strong>Thời điểm tưới:</strong> Tưới vào buổi sáng (9-11h) để cây có thời gian hấp thụ và khô trước khi nhiệt độ giảm vào đêm. <strong>Chất lượng nước:</strong> Sử dụng nước ở nhiệt độ phòng (20-25°C), tránh nước quá lạnh gây shock.</p>
 
-      <h3>Bổ sung ánh sáng nhân tạo</h3>
-      <p>Sử dụng đèn LED grow light để bù đắp thiếu ánh sáng tự nhiên. Chiếu sáng 8-10 giờ/ngày cho cây lá, 6-8 giờ cho cây nghỉ đông.</p>
+      <p><strong>Kỹ thuật kiểm tra:</strong> Đưa ngón tay sâu 3-5cm vào đất, chỉ tưới khi đất khô. Quan sát màu sắc đất và độ nặng của chậu để đánh giá độ ẩm.</p>
 
-      <h3>Tăng độ ẩm không khí</h3>
-      <p>Sử dụng máy phun sương hoặc đặt khay nước gần cây. Nhóm các cây lại gần nhau để tạo vi khí hậu ẩm.</p>
+      <h3>Hệ thống bảo vệ khỏi lạnh</h3>
+      <p><strong>Di chuyển vào trong:</strong> Đưa cây nhạy cảm vào nhà, đặt gần cửa sổ hướng nam để nhận ánh sáng tối đa. <strong>Thiết bị sưởi ấm:</strong> Sử dụng đèn sưởi ceramic, thảm ấm điện cho khu vực trồng cây, duy trì nhiệt độ 18-22°C. <strong>Bọc bảo vệ:</strong> Bọc chậu cây bằng vải nỉ, giấy báo hoặc plastic bubble để giữ nhiệt cho rễ.</p>
 
-      <h3>Điều chỉnh dinh dưỡng</h3>
-      <p>Giảm hoặc ngừng bón phân vì cây phát triển chậm. Chỉ bón phân loãng 1 tháng/lần cho cây xanh quanh năm.</p>
+      <h3>Giải pháp ánh sáng nhân tạo</h3>
+      <p><strong>Đèn LED grow light:</strong> Sử dụng đèn phổ đầy đủ (400-700nm) để bù đắp thiếu ánh sáng tự nhiên. <strong>Thời gian chiếu:</strong> 8-10 giờ/ngày cho cây lá, 6-8 giờ cho cây trong giai đoạn nghỉ đông. <strong>Khoảng cách:</strong> Đặt đèn cách cây 30-50cm để tránh cháy lá.</p>
 
-      <h3>Theo dõi sâu bệnh mùa đông</h3>
-      <p>Không khí trong nhà khô dễ sinh nhện đỏ. Kiểm tra thường xuyên và xử lý kịp thời. Tăng cường thông gió nhẹ để tránh nấm mốc.</p>
+      <h3>Quản lý độ ẩm không khí</h3>
+      <p><strong>Máy phun sương:</strong> Sử dụng máy phun sương tự động để duy trì độ ẩm 50-60%. <strong>Khay nước:</strong> Đặt khay nước rộng có sỏi gần cây để tăng độ ẩm cục bộ. <strong>Nhóm cây:</strong> Tập trung cây lại gần nhau để tạo vi khí hậu ẩm ướt tự nhiên.</p>
+
+      <h3>Điều chỉnh dinh dưỡng thông minh</h3>
+      <p><strong>Giảm tần suất bón phân:</strong> Từ 2 tuần/lần xuống 1 tháng/lần vì cây hấp thụ chậm. <strong>Loại phân phù hợp:</strong> Sử dụng phân có hàm lượng Kali cao để tăng sức chịu lạnh. <strong>Phân lá:</strong> Xịt phân lá loãng 2 tuần/lần để bổ sung vi lượng.</p>
+
+      <h3>Phòng chống sâu bệnh mùa đông</h3>
+      <p><strong>Nhện đỏ:</strong> Thường xuất hiện do không khí khô, tăng độ ẩm và xịt nước thường xuyên. <strong>Rệp sáp:</strong> Kiểm tra kỹ gốc lá và thân cây, xử lý bằng cồn 70% hoặc dầu neem. <strong>Nấm mốc:</strong> Cải thiện thông gió và giảm độ ẩm đất để ngăn ngừa.</p>
+
+      <h3>Lịch chăm sóc hàng tuần</h3>
+      <p><strong>Thứ 2:</strong> Kiểm tra nhiệt độ và điều chỉnh hệ thống sưởi. <strong>Thứ 4:</strong> Kiểm tra độ ẩm đất và tưới nước nếu cần. <strong>Thứ 6:</strong> Vệ sinh lá và kiểm tra sâu bệnh. <strong>Chủ nhật:</strong> Đánh giá tổng thể và lập kế hoạch tuần tiếp theo.</p>
     `,
     image_url: '/lovable-uploads/3d8436a2-face-4e0a-9080-7f11ceb6c900.png',
     category: 'basics',
     created_at: '2024-01-30',
     featured: false,
-    read_time: 5,
+    read_time: 12,
     author: 'Chuyên gia Hồ Thuần',
-    tags: ['mùa đông', 'chăm sóc đặc biệt', 'bảo vệ cây']
+    tags: ['mùa đông', 'chăm sóc đặc biệt', 'bảo vệ cây', 'nhiệt độ', 'ánh sáng']
   }
 ];
 
@@ -480,4 +504,3 @@ export const getCareGuidesByCategory = (category: string): CareGuide[] => {
 export const getFeaturedCareGuides = (): CareGuide[] => {
   return careGuides.filter(guide => guide.featured);
 };
-
