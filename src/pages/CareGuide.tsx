@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
-import { careGuidesData, getFeaturedCareGuides, getCareGuidesByCategory } from '@/data/careGuides';
+import { careGuides, getFeaturedCareGuides, getCareGuidesByCategory } from '@/data/careGuides';
 
 // Care guide categories and content
 const careCategories = [
@@ -22,12 +22,12 @@ const careCategories = [
 const CareGuide = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
-  const [careGuides, setCareGuides] = useState(careGuidesData);
+  const [careGuidesData, setCareGuides] = useState(careGuides);
   const [featuredArticles, setFeaturedArticles] = useState(getFeaturedCareGuides());
   const [loading, setLoading] = useState(false);
 
   const filteredGuides = activeTab === 'all' 
-    ? careGuides.filter(guide => 
+    ? careGuidesData.filter(guide => 
         guide.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
         guide.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
       ) 
@@ -118,7 +118,7 @@ const CareGuide = () => {
             <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
               <div className="text-center group cursor-pointer">
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 group-hover:bg-white/20 transition-all duration-300 group-hover:scale-105">
-                  <div className="text-3xl font-bold text-green-300">{careGuides.length}+</div>
+                  <div className="text-3xl font-bold text-green-300">{careGuidesData.length}+</div>
                   <div className="text-white/80">Bài hướng dẫn</div>
                 </div>
               </div>
