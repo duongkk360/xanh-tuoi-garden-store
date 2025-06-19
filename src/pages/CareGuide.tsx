@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -8,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
-import { supabase } from '@/integrations/supabase/client';
+import { careGuidesData, getFeaturedCareGuides, getCareGuidesByCategory } from '@/data/careGuides';
 
 // Care guide categories and content
 const careCategories = [
@@ -20,58 +19,21 @@ const careCategories = [
   { id: 'pests', name: 'Sâu bệnh hại', icon: '🐛', color: 'from-red-400 to-pink-600' },
 ];
 
-interface CareGuide {
-  id: number;
-  title: string;
-  category: string;
-  excerpt: string;
-  content: string;
-  image_url: string;
-  slug: string;
-  featured: boolean;
-}
-
 const CareGuide = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
-  const [careGuides, setCareGuides] = useState<CareGuide[]>([]);
-  const [featuredArticles, setFeaturedArticles] = useState<CareGuide[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCareGuides = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('care_guides')
-          .select('*')
-          .order('created_at', { ascending: false });
-
-        if (error) {
-          console.error('Error fetching care guides:', error);
-          return;
-        }
-
-        setCareGuides(data || []);
-        setFeaturedArticles(data?.filter(guide => guide.featured) || []);
-      } catch (error) {
-        console.error('Error fetching care guides:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCareGuides();
-  }, []);
+  const [careGuides, setCareGuides] = useState(careGuidesData);
+  const [featuredArticles, setFeaturedArticles] = useState(getFeaturedCareGuides());
+  const [loading, setLoading] = useState(false);
 
   const filteredGuides = activeTab === 'all' 
     ? careGuides.filter(guide => 
         guide.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
         guide.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
       ) 
-    : careGuides.filter(guide => 
-        guide.category === activeTab &&
-        (guide.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-         guide.excerpt.toLowerCase().includes(searchTerm.toLowerCase()))
+    : getCareGuidesByCategory(activeTab).filter(guide => 
+        guide.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        guide.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
   if (loading) {

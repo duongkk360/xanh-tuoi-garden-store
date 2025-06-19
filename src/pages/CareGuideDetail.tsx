@@ -1,11 +1,10 @@
-
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Share2, BookmarkPlus, ThumbsUp, MessageSquare, Clock, Eye, Sparkles } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { getCareGuideBySlug, getRelatedCareGuides, type CareGuide } from '@/data/careGuides';
 
 // Care guide categories for displaying
 const careCategories = [
@@ -17,18 +16,6 @@ const careCategories = [
   { id: 'pests', name: 'Sâu bệnh hại', icon: '🐛', color: 'from-red-400 to-pink-600' },
 ];
 
-interface CareGuide {
-  id: number;
-  title: string;
-  category: string;
-  excerpt: string;
-  content: string;
-  image_url: string;
-  slug: string;
-  featured: boolean;
-  created_at: string;
-}
-
 const CareGuideDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const [article, setArticle] = useState<CareGuide | null>(null);
@@ -36,48 +23,22 @@ const CareGuideDetail = () => {
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    const fetchArticle = async () => {
-      if (!slug) return;
-      
-      try {
-        // Fetch main article
-        const { data: articleData, error: articleError } = await supabase
-          .from('care_guides')
-          .select('*')
-          .eq('slug', slug)
-          .single();
-
-        if (articleError) {
-          console.error('Error fetching article:', articleError);
-          setLoading(false);
-          return;
-        }
-
-        setArticle(articleData);
-
-        // Fetch related articles (same category, excluding current article)
-        if (articleData) {
-          const { data: relatedData, error: relatedError } = await supabase
-            .from('care_guides')
-            .select('*')
-            .eq('category', articleData.category)
-            .neq('id', articleData.id)
-            .limit(3);
-
-          if (relatedError) {
-            console.error('Error fetching related articles:', relatedError);
-          } else {
-            setRelatedArticles(relatedData || []);
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching article:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchArticle();
+    if (!slug) {
+      setLoading(false);
+      return;
+    }
+    
+    // Get article by slug from static data
+    const foundArticle = getCareGuideBySlug(slug);
+    
+    if (foundArticle) {
+      setArticle(foundArticle);
+      // Get related articles
+      const related = getRelatedCareGuides(foundArticle.id, foundArticle.category, 3);
+      setRelatedArticles(related);
+    }
+    
+    setLoading(false);
     
     // Scroll to top on page load
     window.scrollTo(0, 0);
