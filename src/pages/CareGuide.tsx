@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -7,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
-import { careGuides, getFeaturedCareGuides, getCareGuidesByCategory } from '@/data/careGuides';
+import { useCareGuides, useFeaturedCareGuides, useCareGuidesByCategory } from '@/hooks/useCareGuides';
 
 // Care guide categories and content
 const careCategories = [
@@ -22,16 +23,21 @@ const careCategories = [
 const CareGuide = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('all');
-  const [careGuidesData, setCareGuides] = useState(careGuides);
-  const [featuredArticles, setFeaturedArticles] = useState(getFeaturedCareGuides());
-  const [loading, setLoading] = useState(false);
+
+  const { data: allCareGuides = [], isLoading: isLoadingAll } = useCareGuides();
+  const { data: featuredArticles = [], isLoading: isLoadingFeatured } = useFeaturedCareGuides();
+  const { data: categoryGuides = [], isLoading: isLoadingCategory } = useCareGuidesByCategory(
+    activeTab !== 'all' ? activeTab : ''
+  );
+
+  const loading = isLoadingAll || isLoadingFeatured || (activeTab !== 'all' && isLoadingCategory);
 
   const filteredGuides = activeTab === 'all' 
-    ? careGuidesData.filter(guide => 
+    ? allCareGuides.filter(guide => 
         guide.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
         guide.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
       ) 
-    : getCareGuidesByCategory(activeTab).filter(guide => 
+    : categoryGuides.filter(guide => 
         guide.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
         guide.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -118,7 +124,7 @@ const CareGuide = () => {
             <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
               <div className="text-center group cursor-pointer">
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 group-hover:bg-white/20 transition-all duration-300 group-hover:scale-105">
-                  <div className="text-3xl font-bold text-green-300">{careGuidesData.length}+</div>
+                  <div className="text-3xl font-bold text-green-300">{allCareGuides.length}+</div>
                   <div className="text-white/80">Bài hướng dẫn</div>
                 </div>
               </div>

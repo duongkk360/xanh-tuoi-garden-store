@@ -1,10 +1,10 @@
+
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Share2, BookmarkPlus, ThumbsUp, MessageSquare, Clock, Eye, Sparkles } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { getCareGuideBySlug, getRelatedCareGuides, type CareGuide } from '@/data/careGuides';
+import { useCareGuideBySlug, useRelatedCareGuides } from '@/hooks/useCareGuides';
 
 // Care guide categories for displaying
 const careCategories = [
@@ -18,33 +18,15 @@ const careCategories = [
 
 const CareGuideDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [article, setArticle] = useState<CareGuide | null>(null);
-  const [relatedArticles, setRelatedArticles] = useState<CareGuide[]>([]);
-  const [loading, setLoading] = useState(true);
   
-  useEffect(() => {
-    if (!slug) {
-      setLoading(false);
-      return;
-    }
-    
-    // Get article by slug from static data
-    const foundArticle = getCareGuideBySlug(slug);
-    
-    if (foundArticle) {
-      setArticle(foundArticle);
-      // Get related articles
-      const related = getRelatedCareGuides(foundArticle.id, foundArticle.category, 3);
-      setRelatedArticles(related);
-    }
-    
-    setLoading(false);
-    
-    // Scroll to top on page load
-    window.scrollTo(0, 0);
-  }, [slug]);
+  const { data: article, isLoading, error } = useCareGuideBySlug(slug || '');
+  const { data: relatedArticles = [] } = useRelatedCareGuides(
+    article?.id || 0, 
+    article?.category || '', 
+    3
+  );
   
-  if (loading) {
+  if (isLoading) {
     return (
       <>
         <Navbar />
@@ -59,7 +41,7 @@ const CareGuideDetail = () => {
     );
   }
   
-  if (!article) {
+  if (error || !article) {
     return (
       <>
         <Navbar />
