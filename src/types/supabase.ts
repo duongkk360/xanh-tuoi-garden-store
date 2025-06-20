@@ -32,7 +32,7 @@ export interface OrderDetail {
 export interface Product {
   product_id: number;
   name: string;
-  category: number; // Updated to number: 1=Cây có hoa, 2=Mini, 3=Phong thủy
+  category: number; // Updated to number: 1=Văn Phòng, 2=Tiểu Cảnh, 3=Phụ Kiện Tiểu Cảnh
   description?: string;
   price: number;
   stock_quantity: number;
@@ -63,9 +63,9 @@ export interface ProductSales {
 
 // Category mapping utilities
 export const CATEGORY_MAPPING = {
-  1: "Cây có hoa",
-  2: "Mini", 
-  3: "Phong thủy"
+  1: "Văn Phòng",
+  2: "Tiểu Cảnh", 
+  3: "Phụ Kiện Tiểu Cảnh"
 } as const;
 
 export const getCategoryName = (categoryId: number): string => {
@@ -75,7 +75,7 @@ export const getCategoryName = (categoryId: number): string => {
 export const getCategoryId = (categoryName: string): number => {
   const entries = Object.entries(CATEGORY_MAPPING);
   const found = entries.find(([_, name]) => name === categoryName);
-  return found ? parseInt(found[0]) : 2; // Default to Mini
+  return found ? parseInt(found[0]) : 2; // Default to Tiểu Cảnh
 };
 
 // Type guard functions for order status
