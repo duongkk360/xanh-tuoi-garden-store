@@ -203,5 +203,129 @@ export const sampleCareGuides = [
     category: "soil",
     created_at: "2024-01-05T09:15:00Z",
     featured: false
+  },
+  {
+    id: 4,
+    title: "Lịch trình tưới nước cho cây cảnh theo mùa",
+    slug: "lich-trinh-tuoi-nuoc",
+    excerpt: "Xây dựng lịch trình tưới nước khoa học theo từng mùa trong năm để cây cảnh phát triển tốt nhất. Mỗi mùa có những yêu cầu riêng về độ ẩm và tần suất tưới.",
+    content: `
+      <h2>Tại sao cần lịch trình tưới nước theo mùa?</h2>
+      
+      <p>Nhu cầu nước của cây cảnh thay đổi theo mùa do các yếu tố như nhiệt độ, độ ẩm không khí, cường độ ánh sáng và giai đoạn sinh trưởng. Hiểu rõ điều này giúp bạn chăm sóc cây hiệu quả hơn.</p>
+
+      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&h=400&fit=crop" alt="Cây cảnh qua bốn mùa" style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin: 20px 0;" />
+
+      <h3>Mùa xuân - Thời điểm phục hồi (Tháng 3-5)</h3>
+      
+      <p><strong>Đặc điểm:</strong> Cây bắt đầu ra lá non, tăng trưởng mạnh sau mùa đông. Nhiệt độ ấm dần, độ ẩm không khí cao.</p>
+      
+      <p><strong>Tần suất tưới:</strong> 2-3 lần/tuần tùy loại cây</p>
+      
+      <p><strong>Thời gian tưới:</strong> Sáng sớm 6-8h hoặc chiều mát 16-17h</p>
+
+      <img src="https://images.unsplash.com/photo-1472396961693-142e6e269027?w=600&h=400&fit=crop" alt="Cây cảnh mùa xuân" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin: 15px 0;" />
+
+      <h3>Mùa hè - Thời điểm cần nước nhiều nhất (Tháng 6-8)</h3>
+      
+      <p><strong>Đặc điểm:</strong> Nhiệt độ cao, nắng gắt, độ ẩm không khí thấp. Cây thoát hơi nước mạnh.</p>
+      
+      <p><strong>Tần suất tưới:</strong> Hàng ngày hoặc 2 ngày/lần</p>
+      
+      <p><strong>Lưu ý đặc biệt:</strong></p>
+      <ul>
+        <li>Tưới vào sáng sớm trước 7h hoặc chiều sau 17h</li>
+        <li>Tránh tưới vào trưa nắng gắt</li>
+        <li>Phun sương nhẹ lên lá vào buổi tối</li>
+        <li>Che bớt nắng cho cây nếu cần</li>
+      </ul>
+
+      <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&h=400&fit=crop" alt="Chăm sóc cây mùa hè" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin: 15px 0;" />
+
+      <h3>Mùa thu - Thời điểm chuẩn bị nghỉ đông (Tháng 9-11)</h3>
+      
+      <p><strong>Đặc điểm:</strong> Nhiệt độ giảm dần, cây chậm lại việc tăng trưởng, chuẩn bị cho mùa đông.</p>
+      
+      <p><strong>Tần suất tưới:</strong> Giảm xuống 2-3 lần/tuần</p>
+      
+      <p><strong>Điều chỉnh:</strong></p>
+      <ul>
+        <li>Giảm dần lượng nước</li>
+        <li>Tưới vào giữa ngày khi trời ấm</li>
+        <li>Ngưng phun sương lá</li>
+        <li>Chuẩn bị đưa cây vào trong nhà</li>
+      </ul>
+
+      <img src="https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?w=600&h=400&fit=crop" alt="Cây cảnh mùa thu" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin: 15px 0;" />
+
+      <h3>Mùa đông - Thời điểm nghỉ ngơi (Tháng 12-2)</h3>
+      
+      <p><strong>Đặc điểm:</strong> Nhiệt độ thấp, cây ngừng tăng trưởng hoặc tăng trưởng rất chậm.</p>
+      
+      <p><strong>Tần suất tưới:</strong> 1-2 lần/tuần hoặc ít hơn</p>
+      
+      <p><strong>Nguyên tắc:</strong></p>
+      <ul>
+        <li>Để đất khô hơn bình thường</li>
+        <li>Tưới vào giữa ngày nắng</li>
+        <li>Sử dụng nước ở nhiệt độ phòng</li>
+        <li>Kiểm tra độ ẩm đất trước khi tưới</li>
+      </ul>
+
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=300&fit=crop" alt="Chăm sóc cây mùa đông" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin: 15px 0;" />
+
+      <h3>Bảng lịch tưới nước tham khảo</h3>
+      
+      <div style="overflow-x: auto; margin: 20px 0;">
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+          <thead>
+            <tr style="background-color: #f8f9fa;">
+              <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Mùa</th>
+              <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Cây ưa ẩm</th>
+              <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Cây thường</th>
+              <th style="border: 1px solid #ddd; padding: 12px; text-align: left;">Cây chịu hạn</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border: 1px solid #ddd; padding: 12px;"><strong>Xuân</strong></td>
+              <td style="border: 1px solid #ddd; padding: 12px;">3-4 lần/tuần</td>
+              <td style="border: 1px solid #ddd; padding: 12px;">2-3 lần/tuần</td>
+              <td style="border: 1px solid #ddd; padding: 12px;">1-2 lần/tuần</td>
+            </tr>
+            <tr style="background-color: #f8f9fa;">
+              <td style="border: 1px solid #ddd; padding: 12px;"><strong>Hè</strong></td>
+              <td style="border: 1px solid #ddd; padding: 12px;">Hàng ngày</td>
+              <td style="border: 1px solid #ddd; padding: 12px;">4-5 lần/tuần</td>
+              <td style="border: 1px solid #ddd; padding: 12px;">2-3 lần/tuần</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid #ddd; padding: 12px;"><strong>Thu</strong></td>
+              <td style="border: 1px solid #ddd; padding: 12px;">2-3 lần/tuần</td>
+              <td style="border: 1px solid #ddd; padding: 12px;">2 lần/tuần</td>
+              <td style="border: 1px solid #ddd; padding: 12px;">1 lần/tuần</td>
+            </tr>
+            <tr style="background-color: #f8f9fa;">
+              <td style="border: 1px solid #ddd; padding: 12px;"><strong>Đông</strong></td>
+              <td style="border: 1px solid #ddd; padding: 12px;">1-2 lần/tuần</td>
+              <td style="border: 1px solid #ddd; padding: 12px;">1 lần/tuần</td>
+              <td style="border: 1px solid #ddd; padding: 12px;">2 tuần/lần</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Những dấu hiệu cần điều chỉnh lịch tưới</h3>
+      
+      <p><strong>Tưới quá nhiều:</strong> Lá vàng, thối rễ, đất có mùi hôi, xuất hiện nấm mốc.</p>
+      
+      <p><strong>Tưới quá ít:</strong> Lá khô héo, đất nứt nẻ, cây sinh trưởng chậm.</p>
+      
+      <p><strong>Lưu ý:</strong> Đây chỉ là lịch tham khảo. Hãy quan sát cây của bạn và điều chỉnh cho phù hợp với điều kiện cụ thể!</p>
+    `,
+    image_url: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400",
+    category: "watering",
+    created_at: "2024-01-08T11:20:00Z",
+    featured: false
   }
 ];
