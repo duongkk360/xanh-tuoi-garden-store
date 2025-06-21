@@ -8,13 +8,12 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="bg-nature-500 text-white p-1 rounded">
-                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L12.7698 3.90983C14.3983 8.59483 17.405 12.5948 21.435 15.0902L23 16L21.435 16.9098C17.405 19.4052 14.3983 23.4052 12.7698 28.0902L12 30L11.2302 28.0902C9.60175 23.4052 6.59497 19.4052 2.56497 16.9098L1 16L2.56497 15.0902C6.59497 12.5948 9.60175 8.59483 11.2302 3.90983L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M12 6.5L12.5396 7.83213C13.6676 10.9536 15.6464 13.5864 18.1679 15.4604L19 16L18.1679 16.5396C15.6464 18.4136 13.6676 21.0464 12.5396 24.1679L12 25.5L11.4604 24.1679C10.3324 21.0464 8.35357 18.4136 5.83213 16.5396L5 16L5.83213 15.4604C8.35357 13.5864 10.3324 10.9536 11.4604 7.83213L12 6.5Z" fill="white" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <span className="font-bold text-xl">BonsaiHub</span>
+              <img 
+                src="/lovable-uploads/ac7adbf9-5903-4df1-bba3-3f652aee1c6c.png" 
+                alt="Midoni Logo" 
+                className="w-6 h-6"
+              />
+              <span className="font-bold text-xl">Midoni</span>
             </div>
             <p className="text-gray-600 mb-4">
               Mang vẻ đẹp tự nhiên vào không gian sống của bạn với những loài cây cảnh mini độc đáo.
@@ -42,9 +41,9 @@ const Footer = () => {
             <h3 className="font-bold text-lg mb-4">Danh mục</h3>
             <ul className="space-y-2">
               <li><Link to="/products" className="text-gray-600 hover:text-nature-600">Tất cả sản phẩm</Link></li>
-              <li><Link to="/collections/cay-co-hoa" className="text-gray-600 hover:text-nature-600">Cây có hoa</Link></li>
-              <li><Link to="/collections/mini" className="text-gray-600 hover:text-nature-600">Cây Mini</Link></li>
-              <li><Link to="/collections/phong-thuy" className="text-gray-600 hover:text-nature-600">Cây Phong Thủy</Link></li>
+              <li><Link to="/collections/van-phong" className="text-gray-600 hover:text-nature-600">Văn Phòng</Link></li>
+              <li><Link to="/collections/tieu-canh" className="text-gray-600 hover:text-nature-600">Tiểu Cảnh</Link></li>
+              <li><Link to="/collections/phu-kien-tieu-canh" className="text-gray-600 hover:text-nature-600">Phụ Kiện Tiểu Cảnh</Link></li>
               <li><Link to="/collections" className="text-gray-600 hover:text-nature-600">Bộ sưu tập</Link></li>
             </ul>
           </div>
@@ -101,7 +100,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-200 mt-12 pt-8 text-center">
           <p className="text-gray-500 text-sm">
-            &copy; 2024 BonsaiHub. Tất cả các quyền được bảo lưu.
+            &copy; 2024 Midoni. Tất cả các quyền được bảo lưu.
           </p>
         </div>
       </div>

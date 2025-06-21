@@ -53,7 +53,12 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
-            <h1 className="text-2xl font-bold text-green-700">BonsaiShop</h1>
+            <img 
+              src="/lovable-uploads/ac7adbf9-5903-4df1-bba3-3f652aee1c6c.png" 
+              alt="Midoni Logo" 
+              className="w-8 h-8 mr-2"
+            />
+            <h1 className="text-2xl font-bold text-green-700">Midoni</h1>
           </div>
 
           {/* Navigation */}
