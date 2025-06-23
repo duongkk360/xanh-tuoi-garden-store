@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Mail, ArrowLeft } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -19,13 +20,29 @@ const ForgotPassword = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    // In a real app, this would trigger a password reset process
-    // This is just a simulation
-    setTimeout(() => {
+    try {
+      console.log('Sending reset email to:', email);
+      
+      const { data, error } = await supabase.functions.invoke('send-reset-email', {
+        body: { email }
+      });
+
+      if (error) {
+        console.error('Error sending reset email:', error);
+        toast.error("Có lỗi xảy ra khi gửi email. Vui lòng thử lại!");
+        return;
+      }
+
+      console.log('Reset email sent successfully:', data);
       toast.success("Link đặt lại mật khẩu đã được gửi đến email của bạn!");
       setIsSubmitted(true);
+      
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error("Có lỗi xảy ra khi gửi email. Vui lòng thử lại!");
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   return (
