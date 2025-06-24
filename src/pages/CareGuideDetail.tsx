@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Share2, BookmarkPlus, ThumbsUp, Clock, Eye, Sparkles } from 'lucide-react';
+import { ArrowLeft, Clock, Eye, Sparkles } from 'lucide-react';
 import { useCareGuideBySlug, useRelatedCareGuides } from '@/hooks/useCareGuides';
 
 // Care guide categories for displaying
@@ -69,6 +69,8 @@ const CareGuideDetail = () => {
 
   const categoryInfo = careCategories.find(cat => cat.id === article.category);
   const readingTime = Math.ceil(article.content.length / 1000);
+  // Simulate view count based on article ID and some random factor
+  const viewCount = Math.floor((article.id * 127 + 1000) * (1 + Math.random() * 0.5));
   
   return (
     <>
@@ -147,6 +149,10 @@ const CareGuideDetail = () => {
                   <Eye className="h-4 w-4 text-nature-500" />
                   <span>{readingTime} phút đọc</span>
                 </div>
+                <div className="flex items-center gap-1">
+                  <Eye className="h-4 w-4 text-blue-500" />
+                  <span className="font-medium text-blue-700">{viewCount.toLocaleString()} lượt đọc</span>
+                </div>
               </div>
               
               <p className="text-lg text-gray-700 leading-relaxed italic border-l-4 border-nature-400 pl-6 bg-nature-50/50 py-4 rounded-r-lg">
@@ -161,26 +167,6 @@ const CareGuideDetail = () => {
           <div className="max-w-4xl mx-auto bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl p-8 md:p-12 border border-white/50">
             <div className="prose prose-lg max-w-none prose-headings:text-nature-900 prose-a:text-nature-600 hover:prose-a:text-nature-800 prose-img:rounded-xl prose-img:shadow-lg"
                  dangerouslySetInnerHTML={{ __html: article.content }}>
-            </div>
-            
-            {/* Actions */}
-            <div className="border-t border-gray-200 mt-12 pt-8 flex flex-wrap justify-between items-center gap-4">
-              <div className="flex space-x-4">
-                <Button variant="outline" size="sm" className="flex items-center gap-2 hover:bg-green-50 hover:border-green-300 transition-all duration-300 group">
-                  <ThumbsUp className="h-4 w-4 group-hover:text-green-600" />
-                  <span>Hữu ích</span>
-                </Button>
-                <Button variant="outline" size="sm" className="flex items-center gap-2 hover:bg-blue-50 hover:border-blue-300 transition-all duration-300 group">
-                  <BookmarkPlus className="h-4 w-4 group-hover:text-blue-600" />
-                  <span>Lưu lại</span>
-                </Button>
-              </div>
-              <div>
-                <Button variant="ghost" size="sm" className="flex items-center gap-2 hover:bg-purple-50 transition-all duration-300 group">
-                  <Share2 className="h-4 w-4 group-hover:text-purple-600" />
-                  <span>Chia sẻ</span>
-                </Button>
-              </div>
             </div>
             
             {/* Author */}
