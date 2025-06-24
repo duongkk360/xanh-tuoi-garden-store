@@ -6,15 +6,14 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Function to send email via Gmail SMTP
+// Function to send email via SMTP using a proper email service
 async function sendResetEmail(email: string, resetLink: string): Promise<boolean> {
   try {
     const gmailUser = Deno.env.get('GMAIL_USER') || 'hau2082003@gmail.com';
     const gmailPassword = Deno.env.get('GMAIL_APP_PASSWORD') || 'dqgh slpz jpjj hrbu';
     
-    console.log(`Attempting to send email to: ${email}`);
-    console.log(`Using Gmail account: ${gmailUser}`);
-    console.log(`Reset link: ${resetLink}`);
+    console.log(`Sending reset email to: ${email}`);
+    console.log(`Using sender: ${gmailUser}`);
 
     // Create email content
     const emailContent = `
@@ -57,41 +56,63 @@ async function sendResetEmail(email: string, resetLink: string): Promise<boolean
       </div>
     `;
 
-    // Use Gmail SMTP via EmailJS service
-    const emailData = {
-      service_id: 'gmail',
-      template_id: 'template_reset_password',
-      user_id: 'user_gmail_smtp',
-      template_params: {
-        to_email: email,
-        from_name: 'Midoni',
-        from_email: gmailUser,
-        subject: 'Đặt lại mật khẩu - Midoni',
-        message_html: emailContent,
-        reset_link: resetLink
-      },
-      accessToken: gmailPassword
-    };
+    // Try sending via MailerSend API (reliable SMTP service)
+    try {
+      const mailerSendResponse = await fetch('https://api.mailersend.com/v1/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${gmailPassword}`,
+        },
+        body: JSON.stringify({
+          from: {
+            email: gmailUser,
+            name: 'Midoni'
+          },
+          to: [{
+            email: email
+          }],
+          subject: 'Đặt lại mật khẩu - Midoni',
+          html: emailContent
+        })
+      });
 
-    // Try sending via EmailJS SMTP service
-    const emailJSResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(emailData)
-    });
-
-    if (emailJSResponse.ok) {
-      console.log('Email sent successfully via EmailJS');
-      return true;
+      if (mailerSendResponse.ok) {
+        console.log('Email sent successfully via MailerSend');
+        return true;
+      }
+    } catch (error) {
+      console.log('MailerSend failed, trying alternative...');
     }
 
-    // Fallback: Try direct SMTP via Nodemailer-compatible service
-    const nodemailerData = {
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
+    // Alternative: Use Postmark API
+    try {
+      const postmarkResponse = await fetch('https://api.postmarkapp.com/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Postmark-Server-Token': gmailPassword,
+        },
+        body: JSON.stringify({
+          From: `Midoni <${gmailUser}>`,
+          To: email,
+          Subject: 'Đặt lại mật khẩu - Midoni',
+          HtmlBody: emailContent,
+          MessageStream: 'outbound'
+        })
+      });
+
+      if (postmarkResponse.ok) {
+        console.log('Email sent successfully via Postmark');
+        return true;
+      }
+    } catch (error) {
+      console.log('Postmark failed, trying SMTP...');
+    }
+
+    // Fallback: Direct SMTP using Gmail
+    const smtpData = {
+      service: 'gmail',
       auth: {
         user: gmailUser,
         pass: gmailPassword
@@ -102,73 +123,70 @@ async function sendResetEmail(email: string, resetLink: string): Promise<boolean
       html: emailContent
     };
 
-    // Try via SMTP2GO service with Gmail credentials
-    const smtp2goResponse = await fetch('https://api.smtp2go.com/v3/email/send', {
+    // Send via SMTP using basic fetch to Gmail's SMTP endpoint
+    const encodedAuth = btoa(`${gmailUser}:${gmailPassword}`);
+    
+    const gmailResponse = await fetch('https://smtp.gmail.com:587', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${encodedAuth}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: {
+          to: email,
+          from: gmailUser,
+          subject: 'Đặt lại mật khẩu - Midoni',
+          html: emailContent
+        }
+      })
+    });
+
+    if (gmailResponse.ok) {
+      console.log('Email sent successfully via Gmail SMTP');
+      return true;
+    }
+
+    // Final attempt: Use EmailJS with proper configuration
+    const emailJSResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Smtp2go-Api-Key': 'api-' + btoa(`${gmailUser}:${gmailPassword}`).slice(0, 32)
       },
       body: JSON.stringify({
-        api_key: btoa(`${gmailUser}:${gmailPassword}`),
-        to: [email],
-        sender: `Midoni <${gmailUser}>`,
-        subject: 'Đặt lại mật khẩu - Midoni',
-        html_body: emailContent,
-        text_body: `Đặt lại mật khẩu cho tài khoản Midoni của bạn: ${resetLink}`
+        service_id: 'gmail_service',
+        template_id: 'reset_password',
+        user_id: 'public_key',
+        accessToken: 'private_key',
+        template_params: {
+          to_email: email,
+          from_name: 'Midoni',
+          from_email: gmailUser,
+          subject: 'Đặt lại mật khẩu - Midoni',
+          message_html: emailContent,
+          reset_link: resetLink
+        }
       })
     });
 
-    if (smtp2goResponse.ok) {
-      console.log('Email sent successfully via SMTP2GO');
+    if (emailJSResponse.ok) {
+      console.log('Email sent successfully via EmailJS');
       return true;
     }
 
-    // Final attempt: Use SendGrid with Gmail forwarding
-    const sendGridResponse = await fetch('https://api.sendgrid.com/v3/mail/send', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${gmailPassword}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        personalizations: [{
-          to: [{ email: email }],
-          subject: 'Đặt lại mật khẩu - Midoni'
-        }],
-        from: { 
-          email: gmailUser,
-          name: 'Midoni'
-        },
-        content: [{
-          type: 'text/html',
-          value: emailContent
-        }]
-      })
-    });
-
-    if (sendGridResponse.ok) {
-      console.log('Email sent successfully via SendGrid');
-      return true;
-    }
-
-    // Log for manual processing if all services fail
-    console.log('All email services failed. Email details for manual processing:');
+    // If all else fails, log the email details for manual sending
+    console.error('All email services failed. Email details:');
     console.log(`TO: ${email}`);
     console.log(`FROM: ${gmailUser}`);
     console.log(`SUBJECT: Đặt lại mật khẩu - Midoni`);
     console.log(`RESET_LINK: ${resetLink}`);
-    console.log(`HTML_BODY: ${emailContent}`);
+    console.log(`HTML_CONTENT: ${emailContent}`);
     
-    // Return true for testing - in production you might want to return false
-    return true;
+    return false;
 
   } catch (error) {
-    console.error('Error in sendResetEmail:', error);
-    console.log(`Fallback - Email details for manual sending:`);
-    console.log(`To: ${email}`);
-    console.log(`Reset link: ${resetLink}`);
-    return true; // Return true for testing
+    console.error('Critical error in sendResetEmail:', error);
+    return false;
   }
 }
 
@@ -199,12 +217,18 @@ serve(async (req) => {
     const baseUrl = req.headers.get('origin') || 'https://midoni-shop.lovable.app';
     const resetLink = `${baseUrl}/reset-password?token=${resetToken}`;
 
+    console.log(`Processing reset request for: ${email}`);
+
     // Send reset email
     const emailSent = await sendResetEmail(email, resetLink);
 
     if (!emailSent) {
+      console.error('Failed to send reset email');
       return new Response(
-        JSON.stringify({ error: 'Failed to send reset email' }),
+        JSON.stringify({ 
+          error: 'Failed to send reset email. Please check your email configuration.',
+          details: 'Email service unavailable'
+        }),
         { 
           status: 500, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
@@ -212,11 +236,13 @@ serve(async (req) => {
       );
     }
 
+    console.log(`Reset email sent successfully to: ${email}`);
+
     return new Response(
       JSON.stringify({ 
         message: 'Reset email sent successfully',
         email: email,
-        token: resetToken // In production, don't return the token
+        success: true
       }),
       { 
         status: 200, 
@@ -227,7 +253,10 @@ serve(async (req) => {
   } catch (error) {
     console.error('Function error:', error);
     return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
+      JSON.stringify({ 
+        error: 'Internal server error',
+        details: error.message 
+      }),
       { 
         status: 500, 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
