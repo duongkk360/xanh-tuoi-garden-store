@@ -14,8 +14,7 @@ const CartPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const shippingFee = cartTotal >= 500000 || cartTotal === 0 ? 0 : 50000;
-  const orderTotal = cartTotal + shippingFee;
+  const orderTotal = cartTotal; // Removed shipping fee
   
   return (
     <div className="flex flex-col min-h-screen">
@@ -159,31 +158,9 @@ const CartPage = () => {
                 <h2 className="text-xl font-semibold mb-6">Tóm tắt đơn hàng</h2>
                 
                 <div className="space-y-3 text-gray-700">
-                  <div className="flex justify-between">
-                    <span>Tạm tính:</span>
-                    <span className="font-medium">{cartTotal.toLocaleString('vi-VN')}₫</span>
-                  </div>
-                  
-                  <div className="flex justify-between">
-                    <span>Phí vận chuyển:</span>
-                    <span className="font-medium">
-                      {shippingFee > 0 
-                        ? `${shippingFee.toLocaleString('vi-VN')}₫` 
-                        : 'Miễn phí'}
-                    </span>
-                  </div>
-                  
-                  {cartTotal < 500000 && cartTotal > 0 && (
-                    <div className="text-xs text-nature-600 pt-1">
-                      Mua thêm {(500000 - cartTotal).toLocaleString('vi-VN')}₫ để được miễn phí vận chuyển
-                    </div>
-                  )}
-                  
-                  <div className="border-t pt-3 mt-3">
-                    <div className="flex justify-between text-lg font-semibold">
-                      <span>Tổng:</span>
-                      <span>{orderTotal.toLocaleString('vi-VN')}₫</span>
-                    </div>
+                  <div className="flex justify-between text-lg font-semibold">
+                    <span>Tổng:</span>
+                    <span>{orderTotal.toLocaleString('vi-VN')}₫</span>
                   </div>
                 </div>
                 

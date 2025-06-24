@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -77,8 +76,7 @@ const Checkout = () => {
     }
   };
   
-  const shippingFee = cartTotal >= 500000 ? 0 : 50000;
-  const orderTotal = cartTotal + shippingFee;
+  const orderTotal = cartTotal; // Removed shipping fee
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -431,20 +429,6 @@ const Checkout = () => {
               </div>
               
               <div className="border-t pt-4 space-y-3 text-gray-700">
-                <div className="flex justify-between">
-                  <span>Tạm tính:</span>
-                  <span className="font-medium">{cartTotal.toLocaleString('vi-VN')}₫</span>
-                </div>
-                
-                <div className="flex justify-between">
-                  <span>Phí vận chuyển:</span>
-                  <span className="font-medium">
-                    {shippingFee > 0 
-                      ? `${shippingFee.toLocaleString('vi-VN')}₫` 
-                      : 'Miễn phí'}
-                  </span>
-                </div>
-                
                 <div className="border-t pt-3 mt-3">
                   <div className="flex justify-between text-lg font-semibold">
                     <span>Tổng:</span>

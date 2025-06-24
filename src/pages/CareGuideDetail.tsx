@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Share2, BookmarkPlus, ThumbsUp, MessageSquare, Clock, Eye, Sparkles } from 'lucide-react';
+import { ArrowLeft, Share2, BookmarkPlus, ThumbsUp, Clock, Eye, Sparkles } from 'lucide-react';
 import { useCareGuideBySlug, useRelatedCareGuides } from '@/hooks/useCareGuides';
 
 // Care guide categories for displaying
@@ -49,7 +49,7 @@ const CareGuideDetail = () => {
           <div className="text-center max-w-md mx-auto p-8">
             <div className="mb-6">
               <div className="h-20 w-20 bg-gradient-to-r from-gray-200 to-gray-300 rounded-full mx-auto flex items-center justify-center">
-                <MessageSquare className="h-10 w-10 text-gray-400" />
+                <Eye className="h-10 w-10 text-gray-400" />
               </div>
             </div>
             <h1 className="text-2xl font-bold mb-4 text-gray-800">Bài viết không tồn tại</h1>
@@ -137,7 +137,7 @@ const CareGuideDetail = () => {
                   <div className="h-8 w-8 rounded-full bg-gradient-to-r from-nature-400 to-emerald-500 flex items-center justify-center text-white font-bold text-sm">
                     🌱
                   </div>
-                  <span>Tác giả: <span className="font-medium text-gray-800">Green Garden Team</span></span>
+                  <span>Tác giả: <span className="font-medium text-gray-800">Midoni Team</span></span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Clock className="h-4 w-4 text-nature-500" />
@@ -190,7 +190,7 @@ const CareGuideDetail = () => {
                   🌱
                 </div>
                 <div>
-                  <h3 className="font-bold text-xl text-nature-800 mb-2">Green Garden Team</h3>
+                  <h3 className="font-bold text-xl text-nature-800 mb-2">Midoni Team</h3>
                   <p className="text-nature-600 leading-relaxed">Chuyên gia về cây cảnh và trang trí nội thất với hơn 10 năm kinh nghiệm trong lĩnh vực chăm sóc và phát triển cây xanh.</p>
                 </div>
               </div>
@@ -230,31 +230,6 @@ const CareGuideDetail = () => {
                 </div>
               </div>
             )}
-            
-            {/* Comments */}
-            <div className="mt-16">
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-3xl font-bold text-nature-800">Bình luận</h2>
-                <span className="bg-gradient-to-r from-nature-100 to-emerald-100 px-4 py-2 rounded-full text-sm font-bold text-nature-700 border border-nature-200">
-                  5 bình luận
-                </span>
-              </div>
-              <div className="p-8 border border-nature-200 rounded-2xl bg-gradient-to-r from-white to-nature-50/30">
-                <div className="flex items-center gap-4 mb-6">
-                  <MessageSquare className="h-6 w-6 text-nature-500" />
-                  <h3 className="font-bold text-lg text-nature-800">Để lại bình luận của bạn</h3>
-                </div>
-                <textarea
-                  className="w-full rounded-xl border-2 border-nature-200 p-4 h-32 focus:outline-none focus:ring-2 focus:ring-nature-400 focus:border-transparent transition-all duration-300 bg-white/80 backdrop-blur-sm"
-                  placeholder="Viết bình luận của bạn tại đây..."
-                ></textarea>
-                <div className="mt-4 flex justify-end">
-                  <Button className="bg-gradient-to-r from-nature-500 to-emerald-600 hover:from-nature-600 hover:to-emerald-700 px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-300">
-                    Gửi bình luận
-                  </Button>
-                </div>
-              </div>
-            </div>
             
             <div className="mt-16 text-center">
               <Button asChild variant="outline" className="px-8 py-3 rounded-xl border-2 border-nature-300 hover:bg-nature-50 transition-all duration-300">
