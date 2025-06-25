@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -220,9 +221,9 @@ const ProductDetail = () => {
                 </button>
                 <span className="w-16 text-center font-medium">{quantity}</span>
                 <button 
-                  onClick={() => setQuantity(Math.min(product.stock_quantity, quantity + 1))}
+                  onClick={() => setQuantity(Math.min(product.stock_quantity || 0, quantity + 1))}
                   className="w-10 h-10 rounded-lg border border-gray-300 flex items-center justify-center hover:bg-gray-50"
-                  disabled={quantity >= product.stock_quantity}
+                  disabled={quantity >= (product.stock_quantity || 0)}
                 >
                   +
                 </button>
@@ -237,10 +238,10 @@ const ProductDetail = () => {
               <Button 
                 onClick={handleAddToCart} 
                 className="flex-1 bg-nature-600 hover:bg-nature-700 text-white py-3"
-                disabled={product.stock_quantity <= 0}
+                disabled={(product.stock_quantity || 0) <= 0}
               >
                 <ShoppingCart className="w-5 h-5 mr-2" />
-                {product.stock_quantity > 0 ? (user ? 'Thêm vào giỏ hàng' : 'Đăng nhập để mua') : 'Hết hàng'}
+                {(product.stock_quantity || 0) > 0 ? (user ? 'Thêm vào giỏ hàng' : 'Đăng nhập để mua') : 'Hết hàng'}
               </Button>
               <WishlistButton 
                 productId={product.product_id} 
