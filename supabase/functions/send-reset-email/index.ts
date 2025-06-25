@@ -1,22 +1,37 @@
 
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Function to send email via Resend API
+// Function to send email via SMTP (Gmail)
 async function sendResetEmail(email: string, resetLink: string): Promise<boolean> {
   try {
-    const resendApiKey = Deno.env.get('RESEND_API_KEY');
+    const gmailUser = Deno.env.get('GMAIL_USER');
+    const gmailPass = Deno.env.get('GMAIL_PASS');
     
-    if (!resendApiKey) {
-      console.error('RESEND_API_KEY not found in environment variables');
+    if (!gmailUser || !gmailPass) {
+      console.error('GMAIL_USER or GMAIL_PASS not found in environment variables');
       return false;
     }
 
     console.log(`Sending reset email to: ${email}`);
+
+    // Create SMTP client
+    const client = new SMTPClient({
+      connection: {
+        hostname: "smtp.gmail.com",
+        port: 587,
+        tls: true,
+        auth: {
+          username: gmailUser,
+          password: gmailPass,
+        },
+      },
+    });
 
     // Create email content
     const emailContent = `
@@ -59,30 +74,18 @@ async function sendResetEmail(email: string, resetLink: string): Promise<boolean
       </div>
     `;
 
-    // Send email via Resend API
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'Midoni <onboarding@resend.dev>',
-        to: [email],
-        subject: 'Đặt lại mật khẩu - Midoni',
-        html: emailContent,
-      }),
+    // Send email via SMTP
+    await client.send({
+      from: gmailUser,
+      to: email,
+      subject: "Đặt lại mật khẩu - Midoni",
+      content: emailContent,
+      html: emailContent,
     });
 
-    if (response.ok) {
-      const result = await response.json();
-      console.log('Email sent successfully via Resend:', result);
-      return true;
-    } else {
-      const error = await response.text();
-      console.error('Resend API error:', error);
-      return false;
-    }
+    await client.close();
+    console.log('Email sent successfully via SMTP');
+    return true;
 
   } catch (error) {
     console.error('Critical error in sendResetEmail:', error);
@@ -127,7 +130,7 @@ serve(async (req) => {
       return new Response(
         JSON.stringify({ 
           error: 'Failed to send reset email. Please check your email configuration.',
-          details: 'Email service unavailable'
+          details: 'SMTP service unavailable'
         }),
         { 
           status: 500, 
