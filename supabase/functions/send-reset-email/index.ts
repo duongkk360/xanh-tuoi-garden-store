@@ -6,14 +6,17 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Function to send email via SMTP using a proper email service
+// Function to send email via Resend API
 async function sendResetEmail(email: string, resetLink: string): Promise<boolean> {
   try {
-    const gmailUser = Deno.env.get('GMAIL_USER') || 'hau2082003@gmail.com';
-    const gmailPassword = Deno.env.get('GMAIL_APP_PASSWORD') || 'dqgh slpz jpjj hrbu';
+    const resendApiKey = Deno.env.get('RESEND_API_KEY');
     
+    if (!resendApiKey) {
+      console.error('RESEND_API_KEY not found in environment variables');
+      return false;
+    }
+
     console.log(`Sending reset email to: ${email}`);
-    console.log(`Using sender: ${gmailUser}`);
 
     // Create email content
     const emailContent = `
@@ -56,133 +59,30 @@ async function sendResetEmail(email: string, resetLink: string): Promise<boolean
       </div>
     `;
 
-    // Try sending via MailerSend API (reliable SMTP service)
-    try {
-      const mailerSendResponse = await fetch('https://api.mailersend.com/v1/email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${gmailPassword}`,
-        },
-        body: JSON.stringify({
-          from: {
-            email: gmailUser,
-            name: 'Midoni'
-          },
-          to: [{
-            email: email
-          }],
-          subject: 'Đặt lại mật khẩu - Midoni',
-          html: emailContent
-        })
-      });
-
-      if (mailerSendResponse.ok) {
-        console.log('Email sent successfully via MailerSend');
-        return true;
-      }
-    } catch (error) {
-      console.log('MailerSend failed, trying alternative...');
-    }
-
-    // Alternative: Use Postmark API
-    try {
-      const postmarkResponse = await fetch('https://api.postmarkapp.com/email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Postmark-Server-Token': gmailPassword,
-        },
-        body: JSON.stringify({
-          From: `Midoni <${gmailUser}>`,
-          To: email,
-          Subject: 'Đặt lại mật khẩu - Midoni',
-          HtmlBody: emailContent,
-          MessageStream: 'outbound'
-        })
-      });
-
-      if (postmarkResponse.ok) {
-        console.log('Email sent successfully via Postmark');
-        return true;
-      }
-    } catch (error) {
-      console.log('Postmark failed, trying SMTP...');
-    }
-
-    // Fallback: Direct SMTP using Gmail
-    const smtpData = {
-      service: 'gmail',
-      auth: {
-        user: gmailUser,
-        pass: gmailPassword
-      },
-      from: `"Midoni" <${gmailUser}>`,
-      to: email,
-      subject: 'Đặt lại mật khẩu - Midoni',
-      html: emailContent
-    };
-
-    // Send via SMTP using basic fetch to Gmail's SMTP endpoint
-    const encodedAuth = btoa(`${gmailUser}:${gmailPassword}`);
-    
-    const gmailResponse = await fetch('https://smtp.gmail.com:587', {
+    // Send email via Resend API
+    const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'Authorization': `Basic ${encodedAuth}`,
+        'Authorization': `Bearer ${resendApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        message: {
-          to: email,
-          from: gmailUser,
-          subject: 'Đặt lại mật khẩu - Midoni',
-          html: emailContent
-        }
-      })
+        from: 'Midoni <onboarding@resend.dev>',
+        to: [email],
+        subject: 'Đặt lại mật khẩu - Midoni',
+        html: emailContent,
+      }),
     });
 
-    if (gmailResponse.ok) {
-      console.log('Email sent successfully via Gmail SMTP');
+    if (response.ok) {
+      const result = await response.json();
+      console.log('Email sent successfully via Resend:', result);
       return true;
+    } else {
+      const error = await response.text();
+      console.error('Resend API error:', error);
+      return false;
     }
-
-    // Final attempt: Use EmailJS with proper configuration
-    const emailJSResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        service_id: 'gmail_service',
-        template_id: 'reset_password',
-        user_id: 'public_key',
-        accessToken: 'private_key',
-        template_params: {
-          to_email: email,
-          from_name: 'Midoni',
-          from_email: gmailUser,
-          subject: 'Đặt lại mật khẩu - Midoni',
-          message_html: emailContent,
-          reset_link: resetLink
-        }
-      })
-    });
-
-    if (emailJSResponse.ok) {
-      console.log('Email sent successfully via EmailJS');
-      return true;
-    }
-
-    // If all else fails, log the email details for manual sending
-    console.error('All email services failed. Email details:');
-    console.log(`TO: ${email}`);
-    console.log(`FROM: ${gmailUser}`);
-    console.log(`SUBJECT: Đặt lại mật khẩu - Midoni`);
-    console.log(`RESET_LINK: ${resetLink}`);
-    console.log(`HTML_CONTENT: ${emailContent}`);
-    
-    return false;
 
   } catch (error) {
     console.error('Critical error in sendResetEmail:', error);
