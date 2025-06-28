@@ -8,16 +8,37 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { toast } from "sonner";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Mail, ArrowLeft } from 'lucide-react';
+import { Mail, ArrowLeft, AlertCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState('');
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Reset error state
+    setError('');
+    
+    // Validate email
+    if (!email) {
+      setError('Vui lòng nhập địa chỉ email');
+      return;
+    }
+    
+    if (!validateEmail(email)) {
+      setError('Địa chỉ email không hợp lệ');
+      return;
+    }
+    
     setIsLoading(true);
     
     try {
@@ -27,22 +48,43 @@ const ForgotPassword = () => {
         body: { email }
       });
 
+      console.log('Response from edge function:', { data, error });
+
       if (error) {
-        console.error('Error sending reset email:', error);
-        toast.error("Có lỗi xảy ra khi gửi email. Vui lòng thử lại!");
-        return;
+        console.error('Error from edge function:', error);
+        throw error;
       }
 
       console.log('Reset email sent successfully:', data);
       toast.success("Link đặt lại mật khẩu đã được gửi đến email của bạn!");
       setIsSubmitted(true);
       
-    } catch (error) {
-      console.error('Error:', error);
-      toast.error("Có lỗi xảy ra khi gửi email. Vui lòng thử lại!");
+    } catch (error: any) {
+      console.error('Error sending reset email:', error);
+      
+      let errorMessage = "Có lỗi xảy ra khi gửi email. Vui lòng thử lại!";
+      
+      if (error?.message) {
+        if (error.message.includes('network') || error.message.includes('fetch')) {
+          errorMessage = "Lỗi kết nối mạng. Vui lòng kiểm tra kết nối internet và thử lại.";
+        } else if (error.message.includes('timeout')) {
+          errorMessage = "Hết thời gian chờ. Vui lòng thử lại.";
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleRetry = () => {
+    setIsSubmitted(false);
+    setError('');
+    setEmail('');
   };
 
   return (
@@ -67,7 +109,7 @@ const ForgotPassword = () => {
                   </div>
                   <CardTitle className="text-2xl font-bold text-center mt-4">Kiểm tra email của bạn</CardTitle>
                   <CardDescription className="text-center">
-                    Chúng tôi đã gửi một link đặt lại mật khẩu đến {email}
+                    Chúng tôi đã gửi một link đặt lại mật khẩu đến <strong>{email}</strong>
                   </CardDescription>
                 </>
               )}
@@ -83,12 +125,21 @@ const ForgotPassword = () => {
                         id="email"
                         type="email"
                         placeholder="you@example.com"
-                        className="pl-10"
+                        className={`pl-10 ${error ? 'border-red-500' : ''}`}
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          setError(''); // Clear error when typing
+                        }}
                         required
                       />
                     </div>
+                    {error && (
+                      <div className="flex items-center gap-2 text-red-600 text-sm">
+                        <AlertCircle className="h-4 w-4" />
+                        <span>{error}</span>
+                      </div>
+                    )}
                   </div>
                   <Button
                     type="submit"
@@ -100,16 +151,31 @@ const ForgotPassword = () => {
                 </form>
               ) : (
                 <div className="space-y-4">
-                  <p className="text-sm text-gray-600 text-center">
-                    Vui lòng kiểm tra hộp thư đến của bạn và nhấp vào link trong email để đặt lại mật khẩu.
-                  </p>
-                  <p className="text-sm text-gray-600 text-center">
-                    Không nhận được email? Kiểm tra thư mục spam hoặc thử lại.
-                  </p>
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <p className="text-sm text-blue-800 text-center mb-2">
+                      <strong>Vui lòng kiểm tra email của bạn!</strong>
+                    </p>
+                    <p className="text-sm text-blue-700 text-center">
+                      Chúng tôi đã gửi một link đặt lại mật khẩu đến email của bạn. 
+                      Nhấp vào link trong email để tiếp tục.
+                    </p>
+                  </div>
+                  
+                  <div className="text-center space-y-2">
+                    <p className="text-sm text-gray-600">
+                      Không nhận được email?
+                    </p>
+                    <ul className="text-xs text-gray-500 space-y-1">
+                      <li>• Kiểm tra thư mục spam/rác</li>
+                      <li>• Đợi vài phút để email đến</li>
+                      <li>• Kiểm tra địa chỉ email đã nhập</li>
+                    </ul>
+                  </div>
+                  
                   <Button
                     variant="outline"
                     className="w-full"
-                    onClick={() => setIsSubmitted(false)}
+                    onClick={handleRetry}
                   >
                     Thử lại với email khác
                   </Button>
