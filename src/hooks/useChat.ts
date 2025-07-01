@@ -21,6 +21,8 @@ export const useChat = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const sendMessage = async (content: string) => {
+    console.log('Sending message:', content);
+    
     const userMessage: ChatMessage = {
       id: Date.now().toString() + '-user',
       role: 'user',
@@ -37,14 +39,29 @@ export const useChat = () => {
         content: msg.content
       }));
 
+      console.log('Calling edge function with:', { 
+        message: content,
+        conversationHistory: conversationHistory.slice(-10) 
+      });
+
       const { data, error } = await supabase.functions.invoke('chat-with-ai', {
         body: { 
           message: content,
-          conversationHistory: conversationHistory.slice(-10) // Keep last 10 messages for context
+          conversationHistory: conversationHistory.slice(-10)
         }
       });
 
-      if (error) throw error;
+      console.log('Edge function response:', { data, error });
+
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
+      }
+
+      if (!data || !data.reply) {
+        console.error('Invalid response format:', data);
+        throw new Error('Invalid response from AI service');
+      }
 
       const assistantMessage: ChatMessage = {
         id: Date.now().toString() + '-assistant',
@@ -56,13 +73,25 @@ export const useChat = () => {
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
       console.error('Error sending message:', error);
-      const errorMessage: ChatMessage = {
+      
+      let errorMessage = 'Xin lỗi, tôi đang gặp sự cố. Vui lòng thử lại sau.';
+      
+      // More specific error messages based on error type
+      if (error.message?.includes('429')) {
+        errorMessage = 'API đang quá tải, vui lòng thử lại sau ít phút.';
+      } else if (error.message?.includes('401')) {
+        errorMessage = 'Lỗi xác thực API key, vui lòng kiểm tra cấu hình.';
+      } else if (error.message?.includes('network') || error.message?.includes('fetch')) {
+        errorMessage = 'Lỗi kết nối mạng, vui lòng kiểm tra internet và thử lại.';
+      }
+      
+      const errorMsg: ChatMessage = {
         id: Date.now().toString() + '-error',
         role: 'assistant',
-        content: 'Xin lỗi, tôi đang gặp sự cố. Vui lòng thử lại sau.',
+        content: errorMessage,
         timestamp: new Date()
       };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages(prev => [...prev, errorMsg]);
     } finally {
       setIsLoading(false);
     }
