@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
@@ -11,6 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Product } from "@/types/supabase";
 import { getCategoryName } from "@/types/supabase";
 import { useToast } from "@/components/ui/use-toast";
+import ChatBot from "@/components/ChatBot";
 
 const Index = () => {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
@@ -235,6 +235,9 @@ const Index = () => {
       
       {/* Floating Facebook Icon */}
       <FloatingFacebookIcon />
+      
+      {/* ChatBot AI */}
+      <ChatBot />
     </div>
   );
 };
