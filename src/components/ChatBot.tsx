@@ -1,4 +1,5 @@
 
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -182,7 +183,7 @@ const ChatBot = () => {
             </ScrollArea>
 
             <form onSubmit={handleSendMessage} className="p-4 border-t">
-              <div className="flex space-x-2">
+              <div className="flex items-center justify-center space-x-2">
                 <Input
                   ref={inputRef}
                   type="text"
@@ -190,12 +191,12 @@ const ChatBot = () => {
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   disabled={isLoading}
-                  className="flex-1 min-w-0"
+                  className="flex-1 min-w-0 h-10"
                 />
                 <Button
                   type="submit"
                   disabled={!inputMessage.trim() || isLoading}
-                  className="bg-nature-600 hover:bg-nature-700 flex-shrink-0"
+                  className="bg-nature-600 hover:bg-nature-700 flex-shrink-0 h-10 w-10 p-0"
                 >
                   <Send className="h-4 w-4" />
                 </Button>
@@ -209,3 +210,4 @@ const ChatBot = () => {
 };
 
 export default ChatBot;
+
