@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -56,7 +55,7 @@ const ChatBot = () => {
           >
             <Avatar className="h-10 w-10">
               <AvatarImage 
-                src="https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=100&h=100&fit=crop&crop=face" 
+                src="/lovable-uploads/35ec737a-a544-43ae-9dee-e0a1a481476b.png" 
                 alt="Midonaka" 
               />
               <AvatarFallback className="bg-nature-500 text-white">
@@ -78,7 +77,7 @@ const ChatBot = () => {
               <div className="flex items-center space-x-2">
                 <Avatar className="h-8 w-8">
                   <AvatarImage 
-                    src="https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=100&h=100&fit=crop&crop=face" 
+                    src="/lovable-uploads/35ec737a-a544-43ae-9dee-e0a1a481476b.png" 
                     alt="Midonaka" 
                   />
                   <AvatarFallback className="bg-white/20">
