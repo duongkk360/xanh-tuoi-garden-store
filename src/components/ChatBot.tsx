@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -46,7 +47,7 @@ const ChatBot = () => {
   };
 
   return (
-    <div className="fixed bottom-6 left-6 z-50">
+    <div className="fixed bottom-6 right-6 z-50">
       {!isOpen && (
         <div className="flex flex-col space-y-4">
           {/* Facebook Icon - ở trên */}
@@ -94,10 +95,10 @@ const ChatBot = () => {
             </Button>
             
             {/* Tooltip cho AI bot */}
-            <div className="absolute bottom-full left-0 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            <div className="absolute bottom-full right-0 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
               <div className="bg-nature-600 text-white text-xs px-2 py-1 rounded-md whitespace-nowrap shadow-lg">
                 Mido xin chào 👋
-                <div className="absolute top-full left-2 w-0 h-0 border-l-2 border-r-2 border-t-4 border-transparent border-t-nature-600"></div>
+                <div className="absolute top-full right-2 w-0 h-0 border-l-2 border-r-2 border-t-4 border-transparent border-t-nature-600"></div>
               </div>
             </div>
           </div>
@@ -147,7 +148,7 @@ const ChatBot = () => {
                   >
                     <div
                       className={cn(
-                        "max-w-[80%] rounded-lg p-3 text-sm",
+                        "max-w-[80%] rounded-lg p-3 text-sm break-words",
                         message.role === 'user'
                           ? 'bg-nature-600 text-white ml-4'
                           : 'bg-gray-100 text-gray-900 mr-4'
@@ -189,12 +190,12 @@ const ChatBot = () => {
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   disabled={isLoading}
-                  className="flex-1"
+                  className="flex-1 min-w-0"
                 />
                 <Button
                   type="submit"
                   disabled={!inputMessage.trim() || isLoading}
-                  className="bg-nature-600 hover:bg-nature-700"
+                  className="bg-nature-600 hover:bg-nature-700 flex-shrink-0"
                 >
                   <Send className="h-4 w-4" />
                 </Button>
