@@ -19,6 +19,7 @@ import LoginAdmin from "./pages/LoginAdmin";
 import Register from "./pages/Register";
 import VerifyEmail from "./pages/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
+import VerifyResetOTP from "./pages/VerifyResetOTP";
 import ResetPassword from "./pages/ResetPassword";
 import CareGuide from "./pages/CareGuide";
 import CareGuideDetail from "./pages/CareGuideDetail";
@@ -59,6 +60,7 @@ const App = () => (
                 <Route path="/register" element={<Register />} />
                 <Route path="/verify-email" element={<VerifyEmail />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/verify-reset-otp" element={<VerifyResetOTP />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/care-guide" element={<CareGuide />} />
                 <Route path="/care-guide/:slug" element={<CareGuideDetail />} />

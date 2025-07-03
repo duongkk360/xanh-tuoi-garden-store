@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,13 +9,14 @@ import { toast } from "sonner";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Mail, ArrowLeft, AlertCircle } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
+import { useOTP } from '@/hooks/useOTP';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const { sendOTP, loading } = useOTP();
+  const navigate = useNavigate();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -39,30 +40,28 @@ const ForgotPassword = () => {
       return;
     }
     
-    setIsLoading(true);
-    
     try {
-      console.log('Sending reset email to:', email);
+      console.log('Sending OTP to:', email);
       
-      const { data, error } = await supabase.functions.invoke('send-reset-email', {
-        body: { email }
-      });
-
-      console.log('Response from edge function:', { data, error });
-
-      if (error) {
-        console.error('Error from edge function:', error);
-        throw error;
+      const success = await sendOTP(email, 'reset-password');
+      
+      if (success) {
+        console.log('OTP sent successfully');
+        toast.success("Mã OTP đã được gửi đến email của bạn!");
+        setIsSubmitted(true);
+        
+        // Redirect to OTP verification page after 2 seconds
+        setTimeout(() => {
+          navigate(`/verify-reset-otp?email=${encodeURIComponent(email)}`);
+        }, 2000);
+      } else {
+        setError("Có lỗi xảy ra khi gửi mã OTP. Vui lòng thử lại!");
       }
-
-      console.log('Reset email sent successfully:', data);
-      toast.success("Link đặt lại mật khẩu đã được gửi đến email của bạn!");
-      setIsSubmitted(true);
       
     } catch (error: any) {
-      console.error('Error sending reset email:', error);
+      console.error('Error sending OTP:', error);
       
-      let errorMessage = "Có lỗi xảy ra khi gửi email. Vui lòng thử lại!";
+      let errorMessage = "Có lỗi xảy ra khi gửi OTP. Vui lòng thử lại!";
       
       if (error?.message) {
         if (error.message.includes('network') || error.message.includes('fetch')) {
@@ -76,8 +75,6 @@ const ForgotPassword = () => {
       
       setError(errorMessage);
       toast.error(errorMessage);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -98,7 +95,7 @@ const ForgotPassword = () => {
                 <>
                   <CardTitle className="text-2xl font-bold text-center">Quên mật khẩu</CardTitle>
                   <CardDescription className="text-center">
-                    Nhập email của bạn để nhận link đặt lại mật khẩu
+                    Nhập email của bạn để nhận mã OTP đặt lại mật khẩu
                   </CardDescription>
                 </>
               )}
@@ -109,7 +106,7 @@ const ForgotPassword = () => {
                   </div>
                   <CardTitle className="text-2xl font-bold text-center mt-4">Kiểm tra email của bạn</CardTitle>
                   <CardDescription className="text-center">
-                    Chúng tôi đã gửi một link đặt lại mật khẩu đến <strong>{email}</strong>
+                    Chúng tôi đã gửi mã OTP đến <strong>{email}</strong>
                   </CardDescription>
                 </>
               )}
@@ -144,20 +141,20 @@ const ForgotPassword = () => {
                   <Button
                     type="submit"
                     className="w-full bg-nature-600 hover:bg-nature-700"
-                    disabled={isLoading}
+                    disabled={loading}
                   >
-                    {isLoading ? "Đang gửi..." : "Gửi link đặt lại mật khẩu"}
+                    {loading ? "Đang gửi..." : "Gửi mã OTP"}
                   </Button>
                 </form>
               ) : (
                 <div className="space-y-4">
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <p className="text-sm text-blue-800 text-center mb-2">
-                      <strong>Vui lòng kiểm tra email của bạn!</strong>
+                      <strong>Mã OTP đã được gửi!</strong>
                     </p>
                     <p className="text-sm text-blue-700 text-center">
-                      Chúng tôi đã gửi một link đặt lại mật khẩu đến email của bạn. 
-                      Nhấp vào link trong email để tiếp tục.
+                      Vui lòng kiểm tra email của bạn và nhập mã OTP để đặt lại mật khẩu.
+                      Bạn sẽ được chuyển đến trang nhập mã OTP trong giây lát.
                     </p>
                   </div>
                   
