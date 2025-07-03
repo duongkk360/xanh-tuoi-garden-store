@@ -8,12 +8,13 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp
 import { toast } from "sonner";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Shield, ArrowLeft, RefreshCw } from 'lucide-react';
+import { Shield, ArrowLeft, RefreshCw, Info } from 'lucide-react';
 import { useOTP } from '@/hooks/useOTP';
 
 const VerifyResetOTP = () => {
   const [otp, setOtp] = useState('');
   const [timeRemaining, setTimeRemaining] = useState(300); // 5 minutes
+  const [debugOTP, setDebugOTP] = useState<string>('');
   const { verifyOTP, sendOTP, loading } = useOTP();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -78,11 +79,34 @@ const VerifyResetOTP = () => {
     if (!email) return;
 
     try {
-      const success = await sendOTP(email, 'reset-password');
-      if (success) {
+      console.log('Resending OTP to:', email);
+      const response = await fetch(`https://mjmlmhfazplxaxxrghgz.supabase.co/functions/v1/send-otp`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qbWxtaGZhenBseGF4eHJnaGd6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgzNTE1NzksImV4cCI6MjA2MzkyNzU3OX0.5d6uU_g4tAz0b3uuG-AhSAYe-sBATgKHxz-TmoGD7l8`
+        },
+        body: JSON.stringify({ 
+          email: email, 
+          action: 'reset-password' 
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('OTP response:', data);
+        
+        // Show debug OTP for development
+        if (data.debug && data.debug.otp) {
+          setDebugOTP(data.debug.otp);
+          console.log('Debug OTP:', data.debug.otp);
+        }
+        
         toast.success("Mã OTP mới đã được gửi!");
         setTimeRemaining(300); // Reset timer
         setOtp(''); // Clear current OTP
+      } else {
+        throw new Error('Failed to send OTP');
       }
     } catch (error) {
       console.error('Error resending OTP:', error);
@@ -111,6 +135,22 @@ const VerifyResetOTP = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
+              {/* Debug OTP display for development */}
+              {debugOTP && (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                  <div className="flex items-center gap-2 text-yellow-800">
+                    <Info className="h-4 w-4" />
+                    <span className="text-sm font-medium">Mã OTP (cho testing):</span>
+                  </div>
+                  <div className="mt-2 font-mono text-lg font-bold text-yellow-900">
+                    {debugOTP}
+                  </div>
+                  <p className="text-xs text-yellow-700 mt-1">
+                    Sử dụng mã này để test chức năng
+                  </p>
+                </div>
+              )}
+
               <div className="space-y-2">
                 <Label htmlFor="otp" className="text-center block">
                   Mã OTP (6 chữ số)
@@ -180,6 +220,13 @@ const VerifyResetOTP = () => {
                   <ArrowLeft className="mr-2 h-4 w-4" />
                   Quay lại
                 </Button>
+              </div>
+
+              {/* Development note */}
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <p className="text-xs text-blue-800 text-center">
+                  <strong>Lưu ý:</strong> Kiểm tra console (F12) để xem mã OTP trong quá trình phát triển
+                </p>
               </div>
             </CardContent>
           </Card>
