@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
@@ -222,10 +223,10 @@ const Index = () => {
         
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl font-bold mb-4 text-white">
-            Workshop Cây Cảnh - Mừng Tháng 7
+            MIDONI workshop mùng 4 tháng 7
           </h2>
           <p className="text-white mb-8 max-w-2xl mx-auto">
-            Tham gia workshop tạo chậu cây mini xinh xắn! Khám phá nghệ thuật trồng cây và trang trí không gian sống của bạn.
+            (tới chơi hội cây liền tay)
           </p>
         </div>
       </section>
