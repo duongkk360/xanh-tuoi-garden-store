@@ -57,41 +57,39 @@ Deno.serve(async (req) => {
       )
     }
 
-    // Reset password
-    const { error } = await supabaseClient.auth.admin.updateUserById(
-      email,
-      { password: password }
-    )
+    // First, get user by email
+    const { data: userData, error: userError } = await supabaseClient
+      .from('accounts')
+      .select('account_id')
+      .eq('email', email)
+      .single();
+    
+    if (userError || !userData) {
+      console.error('User not found:', userError);
+      return new Response(
+        JSON.stringify({ error: 'Không tìm thấy tài khoản với email này' }),
+        { 
+          status: 404, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
+    }
 
-    if (error) {
-      console.error('Error resetting password:', error);
-      
-      // Try alternative method
-      const { data: userData, error: userError } = await supabaseClient
-        .from('accounts')
-        .select('account_id')
-        .eq('email', email)
-        .single();
-      
-      if (userError || !userData) {
-        return new Response(
-          JSON.stringify({ error: 'Không tìm thấy tài khoản với email này' }),
-          { 
-            status: 404, 
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-          }
-        );
-      }
+    // Update password in accounts table directly
+    const { error: updateError } = await supabaseClient
+      .from('accounts')
+      .update({ password_hash: password })
+      .eq('email', email);
 
-      // Update password in accounts table
-      const { error: updateError } = await supabaseClient
-        .from('accounts')
-        .update({ password_hash: password })
-        .eq('email', email);
-
-      if (updateError) {
-        throw updateError;
-      }
+    if (updateError) {
+      console.error('Error updating password:', updateError);
+      return new Response(
+        JSON.stringify({ error: 'Có lỗi xảy ra khi cập nhật mật khẩu' }),
+        { 
+          status: 500, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      );
     }
 
     // Mark all OTPs for this email as used
