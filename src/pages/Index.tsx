@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
@@ -211,11 +212,23 @@ const Index = () => {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-16 bg-nature-600 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Đăng ký nhận tin tức</h2>
+      <section className="py-16 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url('/lovable-uploads/d1273a7a-6eba-4edf-abe8-9d8635ab904b.png')`,
+          }}
+        >
+          <div className="absolute inset-0 bg-nature-600 bg-opacity-90"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-3xl font-bold mb-4 text-white">
+            Workshop Cây Cảnh - Mừng Tháng 7
+          </h2>
           <p className="text-nature-100 mb-8 max-w-2xl mx-auto">
-            Nhận thông tin về sản phẩm mới, mẹo chăm sóc cây và ưu đãi đặc biệt qua email
+            Tham gia workshop tạo chậu cây mini xinh xắn! Nhận thông tin về các workshop, 
+            sản phẩm mới và ưu đãi đặc biệt qua email
           </p>
           <div className="max-w-md mx-auto flex gap-4">
             <input 
@@ -223,7 +236,7 @@ const Index = () => {
               placeholder="Nhập email của bạn"
               className="flex-1 px-4 py-3 rounded-lg text-gray-900"
             />
-            <Button variant="secondary" size="lg">
+            <Button variant="secondary" size="lg" className="bg-white text-nature-600 hover:bg-gray-100">
               Đăng ký
             </Button>
           </div>
