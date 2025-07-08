@@ -225,7 +225,7 @@ const Index = () => {
           <h2 className="text-3xl font-bold mb-4 text-white">
             MIDONI workshop mùng 4 tháng 7
           </h2>
-          <p className="text-white mb-8 max-w-2xl mx-auto">
+          <p className="text-white mb-8 max-w-2xl mx-auto text-2xl font-bold">
             (tới chơi hội cây liền tay)
           </p>
         </div>
