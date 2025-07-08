@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -125,7 +126,8 @@ const ResetPassword = () => {
     return { level: 'weak', text: 'Yếu', color: 'text-red-600' };
   };
 
-  if (!token) {
+  // Check if we have valid email and verified parameters
+  if (!email || !verified || verified !== 'true') {
     return null;
   }
 
