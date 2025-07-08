@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -19,15 +18,23 @@ const ResetPassword = () => {
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const token = searchParams.get('token');
   const email = searchParams.get('email');
+  const verified = searchParams.get('verified');
 
   useEffect(() => {
-    if (!token) {
-      toast.error("Link không hợp lệ hoặc đã hết hạn");
+    // Check if the user came from the OTP verification page
+    if (!verified || verified !== 'true') {
+      toast.error("Bạn cần xác thực OTP trước khi đặt lại mật khẩu");
       navigate('/forgot-password');
+      return;
     }
-  }, [token, navigate]);
+
+    if (!email) {
+      toast.error("Email không hợp lệ");
+      navigate('/forgot-password');
+      return;
+    }
+  }, [email, verified, navigate]);
 
   const validatePassword = (password: string) => {
     const errors: string[] = [];
@@ -77,19 +84,31 @@ const ResetPassword = () => {
     setIsLoading(true);
     
     try {
-      // Simulate password reset process
-      // In a real application, you would send the token and new password to your backend
-      console.log('Resetting password with token:', token);
-      console.log('New password for email:', email);
+      // Thực hiện API call để đặt lại mật khẩu
+      const response = await fetch('https://mjmlmhfazplxaxxrghgz.supabase.co/functions/v1/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qbWxtaGZhenBseGF4eHJnaGd6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgzNTE1NzksImV4cCI6MjA2MzkyNzU3OX0.5d6uU_g4tAz0b3uuG-AhSAYe-sBATgKHxz-TmoGD7l8`
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      });
       
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Có lỗi xảy ra');
+      }
       
       toast.success("Đặt lại mật khẩu thành công!");
       toast.success("Bạn có thể đăng nhập với mật khẩu mới");
       
       // Redirect to login page
-      navigate('/login');
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
       
     } catch (error) {
       console.error('Error resetting password:', error);

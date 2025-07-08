@@ -1,1 +1,31 @@
+
 project_id = "mjmlmhfazplxaxxrghgz"
+[api]
+enabled = true
+[db]
+enabled = true
+[realtime]
+enabled = true
+[storage]
+enabled = true
+[edge_functions]
+enabled = true
+[analytics]
+enabled = false
+
+[auth]
+enabled = true
+email_template_fetch_url = "http://localhost:9999/"
+
+[[auth.external.providers]]
+enabled = true
+id = "google"
+
+[functions.reset-password]
+verify_jwt = false
+
+[functions.send-otp]
+verify_jwt = false
+
+[functions.verify-otp]
+verify_jwt = false
