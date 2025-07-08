@@ -212,7 +212,7 @@ const Index = () => {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-16 relative overflow-hidden">
+      <section className="py-20 relative overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -222,12 +222,14 @@ const Index = () => {
         </div>
         
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl font-bold mb-4 text-white">
-            MIDONI workshop mùng 4 tháng 7
-          </h2>
-          <p className="text-white mb-8 max-w-2xl mx-auto text-2xl font-bold">
-            (tới chơi hội cây liền tay)
-          </p>
+          <div className="bg-black bg-opacity-40 p-8 rounded-2xl max-w-4xl mx-auto">
+            <h2 className="text-4xl font-bold mb-4 text-white drop-shadow-lg">
+              MIDONI workshop mùng 4 tháng 7
+            </h2>
+            <p className="text-white mb-8 max-w-2xl mx-auto text-3xl font-bold drop-shadow-lg">
+              (tới chơi hội cây liền tay)
+            </p>
+          </div>
         </div>
       </section>
 
