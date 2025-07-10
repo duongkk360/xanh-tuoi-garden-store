@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,13 +8,14 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { Eye, Search, Filter, Trash2 } from 'lucide-react';
+import { Eye, Search, Filter, Trash2, Download } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { Order, OrderDetail, Product, Account } from '@/types/supabase';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { toast } from 'sonner';
+import * as XLSX from 'xlsx';
 
 interface OrderWithDetails extends Order {
   account: Account;
@@ -214,6 +214,57 @@ const OrderManagement = () => {
     }
   };
 
+  const exportToExcel = () => {
+    // Filter only delivered orders
+    const deliveredOrders = orders.filter(order => order.status === 'Đã giao');
+    
+    if (deliveredOrders.length === 0) {
+      toast.error('Không có đơn hàng đã giao để xuất');
+      return;
+    }
+
+    // Prepare data for Excel
+    const excelData = deliveredOrders.map(order => {
+      const products = order.order_details.map(detail => 
+        `${detail.product.name} (x${detail.quantity})`
+      ).join(', ');
+
+      return {
+        'Tên khách hàng': order.account.full_name,
+        'Email': order.account.email,
+        'Sản phẩm đặt': products,
+        'Ngày giao dịch': new Date(order.order_date).toLocaleDateString('vi-VN'),
+        'Tổng tiền (VNĐ)': order.total_amount.toLocaleString('vi-VN')
+      };
+    });
+
+    // Create workbook and worksheet
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(excelData);
+
+    // Set column widths
+    const columnWidths = [
+      { wch: 25 }, // Tên khách hàng
+      { wch: 30 }, // Email
+      { wch: 50 }, // Sản phẩm đặt
+      { wch: 15 }, // Ngày giao dịch
+      { wch: 20 }  // Tổng tiền
+    ];
+    worksheet['!cols'] = columnWidths;
+
+    // Add worksheet to workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Đơn hàng đã giao');
+
+    // Generate filename with current date
+    const currentDate = new Date().toLocaleDateString('vi-VN').replace(/\//g, '-');
+    const filename = `Midoni_DonHang_DaGiao_${currentDate}.xlsx`;
+
+    // Export file
+    XLSX.writeFile(workbook, filename);
+    
+    toast.success(`Đã xuất ${deliveredOrders.length} đơn hàng ra file Excel`);
+  };
+
   if (!user || !isAdmin()) {
     return null;
   }
@@ -253,6 +304,14 @@ const OrderManagement = () => {
                   <SelectItem value="Đã hủy">Đã hủy</SelectItem>
                 </SelectContent>
               </Select>
+              <Button 
+                onClick={exportToExcel}
+                variant="outline"
+                className="w-full md:w-auto"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Xuất Excel (Đã giao)
+              </Button>
             </div>
           </CardContent>
         </Card>
