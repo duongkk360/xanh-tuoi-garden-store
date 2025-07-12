@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -19,6 +18,11 @@ const careCategories = [
   { id: 'fertilizer', name: 'Phân bón', icon: '🌿', color: 'from-lime-400 to-green-600' },
   { id: 'pests', name: 'Sâu bệnh hại', icon: '🐛', color: 'from-red-400 to-pink-600' },
 ];
+
+// Function to generate consistent view count based on article ID
+const generateViewCount = (articleId: number) => {
+  return Math.floor((articleId * 127 + 1000) * (1 + Math.random() * 0.5));
+};
 
 const CareGuide = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -161,45 +165,52 @@ const CareGuide = () => {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {featuredArticles.slice(0, 2).map((article, index) => (
-                  <Link to={`/care-guide/${article.slug}`} key={article.id} className="group">
-                    <div className="relative h-80 overflow-hidden rounded-2xl shadow-xl group-hover:shadow-2xl transition-all duration-500 group-hover:scale-[1.02]">
-                      <img 
-                        src={article.image_url} 
-                        alt={article.title}
-                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                      
-                      {/* Floating badge */}
-                      <div className="absolute top-4 left-4">
-                        <div className="bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1 animate-pulse">
-                          <Sparkles className="h-3 w-3" />
-                          Nổi bật
+                {featuredArticles.slice(0, 2).map((article, index) => {
+                  const viewCount = generateViewCount(article.id);
+                  return (
+                    <Link to={`/care-guide/${article.slug}`} key={article.id} className="group">
+                      <div className="relative h-80 overflow-hidden rounded-2xl shadow-xl group-hover:shadow-2xl transition-all duration-500 group-hover:scale-[1.02]">
+                        <img 
+                          src={article.image_url} 
+                          alt={article.title}
+                          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        
+                        {/* Floating badge */}
+                        <div className="absolute top-4 left-4">
+                          <div className="bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1 animate-pulse">
+                            <Sparkles className="h-3 w-3" />
+                            Nổi bật
+                          </div>
+                        </div>
+                        
+                        <div className="absolute bottom-0 left-0 right-0 p-6">
+                          <div className="mb-3 flex items-center justify-between">
+                            <span className="inline-block px-3 py-1 text-xs bg-white/20 backdrop-blur-sm text-white rounded-full border border-white/30">
+                              {careCategories.find(cat => cat.id === article.category)?.icon} {" "}
+                              {careCategories.find(cat => cat.id === article.category)?.name}
+                            </span>
+                            <div className="flex items-center text-white/80 text-xs">
+                              <Eye className="h-3 w-3 mr-1" />
+                              {viewCount.toLocaleString()}
+                            </div>
+                          </div>
+                          <h3 className="text-xl font-bold text-white mb-2 group-hover:text-yellow-300 transition-colors">
+                            {article.title}
+                          </h3>
+                          <p className="text-white/80 text-sm mb-4 line-clamp-2">{article.excerpt}</p>
+                          <Button 
+                            variant="outline" 
+                            className="bg-white/20 backdrop-blur-sm text-white border-white/30 hover:bg-white hover:text-nature-900 transition-all duration-300"
+                          >
+                            Đọc ngay <ArrowRight className="ml-2 h-4 w-4" />
+                          </Button>
                         </div>
                       </div>
-                      
-                      <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <div className="mb-3">
-                          <span className="inline-block px-3 py-1 text-xs bg-white/20 backdrop-blur-sm text-white rounded-full border border-white/30">
-                            {careCategories.find(cat => cat.id === article.category)?.icon} {" "}
-                            {careCategories.find(cat => cat.id === article.category)?.name}
-                          </span>
-                        </div>
-                        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-yellow-300 transition-colors">
-                          {article.title}
-                        </h3>
-                        <p className="text-white/80 text-sm mb-4 line-clamp-2">{article.excerpt}</p>
-                        <Button 
-                          variant="outline" 
-                          className="bg-white/20 backdrop-blur-sm text-white border-white/30 hover:bg-white hover:text-nature-900 transition-all duration-300"
-                        >
-                          Đọc ngay <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -235,43 +246,50 @@ const CareGuide = () => {
             
             <TabsContent value="all" className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredGuides.map((guide, index) => (
-                  <Card key={guide.id} className="group overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] border-0 bg-white/80 backdrop-blur-sm">
-                    <Link to={`/care-guide/${guide.slug}`}>
-                      <div className="h-48 overflow-hidden relative">
-                        <img 
-                          src={guide.image_url} 
-                          alt={guide.title} 
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        
-                        {/* Category badge with gradient */}
-                        <div className="absolute top-3 left-3">
-                          <div className={`px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${careCategories.find(cat => cat.id === guide.category)?.color || 'from-gray-400 to-gray-600'} shadow-lg`}>
-                            {careCategories.find(cat => cat.id === guide.category)?.icon} {" "}
-                            {careCategories.find(cat => cat.id === guide.category)?.name}
+                {filteredGuides.map((guide, index) => {
+                  const viewCount = generateViewCount(guide.id);
+                  return (
+                    <Card key={guide.id} className="group overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] border-0 bg-white/80 backdrop-blur-sm">
+                      <Link to={`/care-guide/${guide.slug}`}>
+                        <div className="h-48 overflow-hidden relative">
+                          <img 
+                            src={guide.image_url} 
+                            alt={guide.title} 
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          
+                          {/* Category badge with gradient */}
+                          <div className="absolute top-3 left-3">
+                            <div className={`px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${careCategories.find(cat => cat.id === guide.category)?.color || 'from-gray-400 to-gray-600'} shadow-lg`}>
+                              {careCategories.find(cat => cat.id === guide.category)?.icon} {" "}
+                              {careCategories.find(cat => cat.id === guide.category)?.name}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <CardContent className="p-6">
-                        <h3 className="text-lg font-bold mb-3 group-hover:text-nature-600 transition-colors line-clamp-2">
-                          {guide.title}
-                        </h3>
-                        <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
-                          {guide.excerpt}
-                        </p>
-                        
-                        <div className="mt-4 flex items-center justify-between">
-                          <span className="text-xs text-gray-500">
-                            {Math.ceil(guide.content.length / 1000)} phút đọc
-                          </span>
-                          <ArrowRight className="h-4 w-4 text-nature-500 group-hover:translate-x-1 transition-transform duration-300" />
-                        </div>
-                      </CardContent>
-                    </Link>
-                  </Card>
-                ))}
+                        <CardContent className="p-6">
+                          <h3 className="text-lg font-bold mb-3 group-hover:text-nature-600 transition-colors line-clamp-2">
+                            {guide.title}
+                          </h3>
+                          <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
+                            {guide.excerpt}
+                          </p>
+                          
+                          <div className="mt-4 flex items-center justify-between">
+                            <div className="flex items-center text-xs text-gray-500 gap-4">
+                              <span>{Math.ceil(guide.content.length / 1000)} phút đọc</span>
+                              <div className="flex items-center">
+                                <Eye className="h-3 w-3 mr-1" />
+                                {viewCount.toLocaleString()}
+                              </div>
+                            </div>
+                            <ArrowRight className="h-4 w-4 text-nature-500 group-hover:translate-x-1 transition-transform duration-300" />
+                          </div>
+                        </CardContent>
+                      </Link>
+                    </Card>
+                  );
+                })}
               </div>
               
               {filteredGuides.length === 0 && (
@@ -288,41 +306,48 @@ const CareGuide = () => {
             {careCategories.map((category) => (
               <TabsContent key={category.id} value={category.id} className="mt-0">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {filteredGuides.map((guide) => (
-                    <Card key={guide.id} className="group overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] border-0 bg-white/80 backdrop-blur-sm">
-                      <Link to={`/care-guide/${guide.slug}`}>
-                        <div className="h-48 overflow-hidden relative">
-                          <img 
-                            src={guide.image_url} 
-                            alt={guide.title} 
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          
-                          <div className="absolute top-3 left-3">
-                            <div className={`px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${category.color} shadow-lg`}>
-                              {category.icon} {category.name}
+                  {filteredGuides.map((guide) => {
+                    const viewCount = generateViewCount(guide.id);
+                    return (
+                      <Card key={guide.id} className="group overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] border-0 bg-white/80 backdrop-blur-sm">
+                        <Link to={`/care-guide/${guide.slug}`}>
+                          <div className="h-48 overflow-hidden relative">
+                            <img 
+                              src={guide.image_url} 
+                              alt={guide.title} 
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <div className="absolute top-3 left-3">
+                              <div className={`px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${category.color} shadow-lg`}>
+                                {category.icon} {category.name}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <CardContent className="p-6">
-                          <h3 className="text-lg font-bold mb-3 group-hover:text-nature-600 transition-colors line-clamp-2">
-                            {guide.title}
-                          </h3>
-                          <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
-                            {guide.excerpt}
-                          </p>
-                          
-                          <div className="mt-4 flex items-center justify-between">
-                            <span className="text-xs text-gray-500">
-                              {Math.ceil(guide.content.length / 1000)} phút đọc
-                            </span>
-                            <ArrowRight className="h-4 w-4 text-nature-500 group-hover:translate-x-1 transition-transform duration-300" />
-                          </div>
-                        </CardContent>
-                      </Link>
-                    </Card>
-                  ))}
+                          <CardContent className="p-6">
+                            <h3 className="text-lg font-bold mb-3 group-hover:text-nature-600 transition-colors line-clamp-2">
+                              {guide.title}
+                            </h3>
+                            <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
+                              {guide.excerpt}
+                            </p>
+                            
+                            <div className="mt-4 flex items-center justify-between">
+                              <div className="flex items-center text-xs text-gray-500 gap-4">
+                                <span>{Math.ceil(guide.content.length / 1000)} phút đọc</span>
+                                <div className="flex items-center">
+                                  <Eye className="h-3 w-3 mr-1" />
+                                  {viewCount.toLocaleString()}
+                                </div>
+                              </div>
+                              <ArrowRight className="h-4 w-4 text-nature-500 group-hover:translate-x-1 transition-transform duration-300" />
+                            </div>
+                          </CardContent>
+                        </Link>
+                      </Card>
+                    );
+                  })}
                 </div>
                 
                 {filteredGuides.length === 0 && (
