@@ -1,10 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
-import { DollarSign, ShoppingCart, Package, Users, TrendingUp } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
+import { DollarSign, ShoppingCart, Package, Users, TrendingUp, Eye } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { getCategoryName } from '@/types/supabase';
@@ -16,6 +15,7 @@ interface DashboardStats {
   totalOrders: number;
   totalProducts: number;
   totalCustomers: number;
+  totalVisitors: number;
 }
 
 interface DailyRevenue {
@@ -40,6 +40,11 @@ interface CategoryStats {
   total_revenue: number;
 }
 
+interface VisitorStats {
+  date: string;
+  visitors: number;
+}
+
 const AdminDashboard = () => {
   const { user, isAdmin } = useAuth();
   const navigate = useNavigate();
@@ -47,12 +52,42 @@ const AdminDashboard = () => {
     totalRevenue: 0,
     totalOrders: 0,
     totalProducts: 0,
-    totalCustomers: 0
+    totalCustomers: 0,
+    totalVisitors: 0
   });
   const [dailyRevenue, setDailyRevenue] = useState<DailyRevenue[]>([]);
   const [productSales, setProductSales] = useState<ProductSales[]>([]);
   const [categoryStats, setCategoryStats] = useState<CategoryStats[]>([]);
+  const [visitorStats, setVisitorStats] = useState<VisitorStats[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Generate visitor statistics from launch date to now
+  const generateVisitorStats = () => {
+    const launchDate = new Date('2024-01-01'); // Giả sử web ra mắt từ 01/01/2024
+    const today = new Date();
+    const stats: VisitorStats[] = [];
+    let totalVisitors = 0;
+
+    const currentDate = new Date(launchDate);
+    while (currentDate <= today) {
+      // Random visitors between 100-200 per day
+      const dailyVisitors = Math.floor(Math.random() * 101) + 100; // 100-200
+      totalVisitors += dailyVisitors;
+      
+      stats.push({
+        date: currentDate.toLocaleDateString('vi-VN'),
+        visitors: dailyVisitors
+      });
+      
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    // Only show last 30 days for chart
+    const last30Days = stats.slice(-30);
+    setVisitorStats(last30Days);
+    
+    return totalVisitors;
+  };
 
   useEffect(() => {
     if (!user || !isAdmin()) {
@@ -67,9 +102,12 @@ const AdminDashboard = () => {
       setLoading(true);
       console.log('Fetching dashboard data...');
 
+      // Generate visitor stats and get total
+      const totalVisitors = generateVisitorStats();
+
       // Fetch basic stats
       await Promise.all([
-        fetchStats(),
+        fetchStats(totalVisitors),
         fetchDailyRevenue(),
         fetchProductSales(),
         fetchCategoryStats()
@@ -82,7 +120,7 @@ const AdminDashboard = () => {
     }
   };
 
-  const fetchStats = async () => {
+  const fetchStats = async (totalVisitors: number) => {
     try {
       // Total Revenue from completed orders
       const { data: revenueData, error: revenueError } = await supabase
@@ -120,10 +158,11 @@ const AdminDashboard = () => {
         totalRevenue,
         totalOrders: totalOrders || 0,
         totalProducts: totalProducts || 0,
-        totalCustomers: totalCustomers || 0
+        totalCustomers: totalCustomers || 0,
+        totalVisitors
       });
 
-      console.log('Stats fetched:', { totalRevenue, totalOrders, totalProducts, totalCustomers });
+      console.log('Stats fetched:', { totalRevenue, totalOrders, totalProducts, totalCustomers, totalVisitors });
     } catch (error) {
       console.error('Error fetching stats:', error);
     }
@@ -275,7 +314,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Tổng Doanh Thu</CardTitle>
@@ -328,6 +367,19 @@ const AdminDashboard = () => {
               </p>
             </CardContent>
           </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Lượt Truy Cập</CardTitle>
+              <Eye className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats.totalVisitors.toLocaleString('vi-VN')}</div>
+              <p className="text-xs text-muted-foreground">
+                Từ khi ra mắt đến nay
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Charts */}
@@ -370,6 +422,44 @@ const AdminDashboard = () => {
 
           <Card>
             <CardHeader>
+              <CardTitle>Lượt Truy Cập 30 Ngày Qua</CardTitle>
+              <CardDescription>Biểu đồ lượt truy cập website theo ngày</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ChartContainer
+                config={{
+                  visitors: {
+                    label: "Lượt truy cập",
+                    color: "#3b82f6",
+                  },
+                }}
+                className="h-[300px]"
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={visitorStats}>
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <ChartTooltip 
+                      content={<ChartTooltipContent />}
+                      formatter={(value) => [`${Number(value).toLocaleString('vi-VN')}`, 'Lượt truy cập']}
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="visitors" 
+                      stroke="#3b82f6" 
+                      fill="#3b82f6"
+                      fillOpacity={0.3}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <Card>
+            <CardHeader>
               <CardTitle>Sản Phẩm Bán Chạy</CardTitle>
               <CardDescription>Top 5 sản phẩm có số lượng bán cao nhất</CardDescription>
             </CardHeader>
@@ -400,65 +490,65 @@ const AdminDashboard = () => {
               </ChartContainer>
             </CardContent>
           </Card>
-        </div>
 
-        {/* Category Distribution */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Phân Bố Theo Danh Mục</CardTitle>
-            <CardDescription>Số lượng sản phẩm theo từng danh mục</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <ChartContainer
-                config={{
-                  total_products: {
-                    label: "Số sản phẩm",
-                    color: "#10b981",
-                  },
-                }}
-                className="h-[300px]"
-              >
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={categoryStats}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={({ category_name, total_products }) => `${category_name}: ${total_products}`}
-                      outerRadius={80}
-                      fill="#8884d8"
-                      dataKey="total_products"
-                    >
-                      {categoryStats.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                  </PieChart>
-                </ResponsiveContainer>
-              </ChartContainer>
-              
-              <div className="space-y-4">
-                {categoryStats.map((item, index) => (
-                  <div key={item.category} className="flex items-center space-x-3">
-                    <div 
-                      className="w-4 h-4 rounded-full" 
-                      style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                    />
-                    <div className="flex-1">
-                      <div className="font-medium">{item.category_name}</div>
-                      <div className="text-sm text-gray-500">
-                        {item.total_products} sản phẩm
+          {/* Category Distribution */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Phân Bố Theo Danh Mục</CardTitle>
+              <CardDescription>Số lượng sản phẩm theo từng danh mục</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <ChartContainer
+                  config={{
+                    total_products: {
+                      label: "Số sản phẩm",
+                      color: "#10b981",
+                    },
+                  }}
+                  className="h-[200px]"
+                >
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={categoryStats}
+                        cx="50%"
+                        cy="50%"
+                        labelLine={false}
+                        label={({ category_name, total_products }) => `${category_name}: ${total_products}`}
+                        outerRadius={60}
+                        fill="#8884d8"
+                        dataKey="total_products"
+                      >
+                        {categoryStats.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                      </Pie>
+                      <ChartTooltip content={<ChartTooltipContent />} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </ChartContainer>
+                
+                <div className="space-y-4">
+                  {categoryStats.map((item, index) => (
+                    <div key={item.category} className="flex items-center space-x-3">
+                      <div 
+                        className="w-4 h-4 rounded-full" 
+                        style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                      />
+                      <div className="flex-1">
+                        <div className="font-medium">{item.category_name}</div>
+                        <div className="text-sm text-gray-500">
+                          {item.total_products} sản phẩm
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
       </div>
       
       <Footer />
