@@ -263,9 +263,9 @@ const About = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-white rounded-lg overflow-hidden shadow-md">
-              <img 
-                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" 
-                alt="Nguyễn Văn An" 
+               <img 
+                src="/lovable-uploads/5b4f55e9-6519-4083-bc8c-bb596cd138de.png" 
+                alt="Tôn Khánh Linh" 
                 className="w-full h-64 object-cover object-center"
               />
               <div className="p-4">
@@ -279,7 +279,7 @@ const About = () => {
             
             <div className="bg-white rounded-lg overflow-hidden shadow-md">
               <img 
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" 
+                src="/lovable-uploads/149cbbad-ef9a-4c89-af25-f9f5eaa9d594.png" 
                 alt="Văn Dức Anh" 
                 className="w-full h-64 object-cover object-center"
               />
@@ -294,7 +294,7 @@ const About = () => {
             
             <div className="bg-white rounded-lg overflow-hidden shadow-md">
               <img 
-                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" 
+                src="/lovable-uploads/defa24ee-465a-4e2f-8ad8-b9acc5814a84.png" 
                 alt="Trần Đức Huy" 
                 className="w-full h-64 object-cover object-center"
               />
@@ -309,7 +309,7 @@ const About = () => {
             
             <div className="bg-white rounded-lg overflow-hidden shadow-md">
               <img 
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80" 
+                src="/lovable-uploads/225b3f2f-f63c-4217-88ea-dbaeef05e3df.png" 
                 alt="Nguyễn Đức Hậu & Lê Thái Dương" 
                 className="w-full h-64 object-cover object-center"
               />
