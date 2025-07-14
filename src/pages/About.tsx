@@ -353,9 +353,7 @@ const About = () => {
                 </div>
                 <h3 className="font-semibold text-lg mb-2">Địa chỉ</h3>
                 <p className="text-gray-700">
-                  123 Đường Lê Lợi<br />
-                  Quận Hoàn Kiếm<br />
-                  Hà Nội, Việt Nam
+                  Đại học FPT -Hòa Lạc -Hà Nội
                 </p>
               </CardContent>
             </Card>
@@ -366,11 +364,8 @@ const About = () => {
                   <PhoneIcon className="text-nature-600 w-6 h-6" />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">Điện thoại</h3>
-                <p className="text-gray-700 mb-2">
-                  Bán hàng: 028 1234 5678
-                </p>
                 <p className="text-gray-700">
-                  Hỗ trợ: 028 8765 4321
+                  0971075226
                 </p>
               </CardContent>
             </Card>
@@ -381,11 +376,8 @@ const About = () => {
                   <Mail className="text-nature-600 w-6 h-6" />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">Email</h3>
-                <p className="text-gray-700 mb-2">
-                  info@bonsaihub.vn
-                </p>
                 <p className="text-gray-700">
-                  support@bonsaihub.vn
+                  duongcujer@gmail.com
                 </p>
               </CardContent>
             </Card>
