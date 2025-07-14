@@ -308,11 +308,18 @@ const About = () => {
             </div>
             
             <div className="bg-white rounded-lg overflow-hidden shadow-md">
-              <img 
-                src="/lovable-uploads/225b3f2f-f63c-4217-88ea-dbaeef05e3df.png" 
-                alt="Nguyễn Đức Hậu & Lê Thái Dương" 
-                className="w-full h-64 object-cover object-center"
-              />
+              <div className="grid grid-cols-2 gap-1">
+                <img 
+                  src="/lovable-uploads/225b3f2f-f63c-4217-88ea-dbaeef05e3df.png" 
+                  alt="Nguyễn Đức Hậu" 
+                  className="w-full h-32 object-cover object-center"
+                />
+                <img 
+                  src="/lovable-uploads/f4d0b7a7-dfd5-4534-bf78-2c9c070444be.png" 
+                  alt="Lê Thái Dương" 
+                  className="w-full h-32 object-cover object-center"
+                />
+              </div>
               <div className="p-4">
                 <h3 className="font-semibold text-lg">Nguyễn Đức Hậu & Lê Thái Dương</h3>
                 <p className="text-nature-600">IT</p>
