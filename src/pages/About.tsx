@@ -294,13 +294,13 @@ const About = () => {
             
             <div className="bg-white rounded-lg overflow-hidden shadow-md">
               <img 
-                src="/lovable-uploads/defa24ee-465a-4e2f-8ad8-b9acc5814a84.png" 
+                src="/lovable-uploads/3d963ddd-f659-4d78-a767-9a4e4797b792.png" 
                 alt="Trần Đức Huy" 
                 className="w-full h-64 object-cover object-center"
               />
               <div className="p-4">
                 <h3 className="font-semibold text-lg">Trần Đức Huy</h3>
-                <p className="text-nature-600">makerting</p>
+                <p className="text-nature-600">marketing</p>
                 <p className="text-sm text-gray-600 mt-2">
                   Chuyên gia marketing và phát triển thị trường, tăng trưởng doanh số bán hàng.
                 </p>
