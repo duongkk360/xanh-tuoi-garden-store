@@ -269,10 +269,10 @@ const About = () => {
                 className="w-full h-64 object-cover object-center"
               />
               <div className="p-4">
-                <h3 className="font-semibold text-lg">Nguyễn Văn An</h3>
+                <h3 className="font-semibold text-lg">Tôn Khánh Linh</h3>
                 <p className="text-nature-600">leader</p>
                 <p className="text-sm text-gray-600 mt-2">
-                  Với kinh nghiệm trong lĩnh vực cây cảnh và trang trí nội thất.
+                  Người lãnh đạo với tầm nhìn chiến lược và kinh nghiệm quản lý doanh nghiệp.
                 </p>
               </div>
             </div>
@@ -280,14 +280,14 @@ const About = () => {
             <div className="bg-white rounded-lg overflow-hidden shadow-md">
               <img 
                 src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" 
-                alt="Trần Thị Mai" 
+                alt="Văn Dức Anh" 
                 className="w-full h-64 object-cover object-center"
               />
               <div className="p-4">
-                <h3 className="font-semibold text-lg">Trần Thị Mai</h3>
+                <h3 className="font-semibold text-lg">Văn Dức Anh</h3>
                 <p className="text-nature-600">truyền thông</p>
                 <p className="text-sm text-gray-600 mt-2">
-                  Chuyên gia trong nghệ thuật tạo hình và chăm sóc bonsai.
+                  Chuyên gia truyền thông và xây dựng thương hiệu, quản lý các kênh truyền thông.
                 </p>
               </div>
             </div>
@@ -295,14 +295,14 @@ const About = () => {
             <div className="bg-white rounded-lg overflow-hidden shadow-md">
               <img 
                 src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" 
-                alt="Lê Minh Đức" 
+                alt="Trần Đức Huy" 
                 className="w-full h-64 object-cover object-center"
               />
               <div className="p-4">
-                <h3 className="font-semibold text-lg">Lê Minh Đức</h3>
+                <h3 className="font-semibold text-lg">Trần Đức Huy</h3>
                 <p className="text-nature-600">makerting</p>
                 <p className="text-sm text-gray-600 mt-2">
-                  Phụ trách hoạt động kinh doanh và phát triển quan hệ đối tác.
+                  Chuyên gia marketing và phát triển thị trường, tăng trưởng doanh số bán hàng.
                 </p>
               </div>
             </div>
@@ -310,12 +310,15 @@ const About = () => {
             <div className="bg-white rounded-lg overflow-hidden shadow-md">
               <img 
                 src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80" 
-                alt="Phạm Hoài Anh" 
+                alt="Nguyễn Đức Hậu & Lê Thái Dương" 
                 className="w-full h-64 object-cover object-center"
               />
               <div className="p-4">
-                <h3 className="font-semibold text-lg">Phạm Hoài Anh</h3>
+                <h3 className="font-semibold text-lg">Nguyễn Đức Hậu & Lê Thái Dương</h3>
                 <p className="text-nature-600">IT</p>
+                <p className="text-sm text-gray-600 mt-2">
+                  Đội ngũ IT phụ trách phát triển và bảo trì hệ thống công nghệ của công ty.
+                </p>
                 <p className="text-sm text-gray-600 mt-2">
                   Chịu trách nhiệm hỗ trợ khách hàng và phát triển hướng dẫn chăm sóc.
                 </p>
