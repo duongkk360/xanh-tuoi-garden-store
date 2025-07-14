@@ -270,7 +270,7 @@ const About = () => {
               />
               <div className="p-4">
                 <h3 className="font-semibold text-lg">Nguyễn Văn An</h3>
-                <p className="text-nature-600">Nhà sáng lập & CEO</p>
+                <p className="text-nature-600">leader</p>
                 <p className="text-sm text-gray-600 mt-2">
                   Với kinh nghiệm trong lĩnh vực cây cảnh và trang trí nội thất.
                 </p>
@@ -285,7 +285,7 @@ const About = () => {
               />
               <div className="p-4">
                 <h3 className="font-semibold text-lg">Trần Thị Mai</h3>
-                <p className="text-nature-600">Chuyên gia Bonsai</p>
+                <p className="text-nature-600">truyền thông</p>
                 <p className="text-sm text-gray-600 mt-2">
                   Chuyên gia trong nghệ thuật tạo hình và chăm sóc bonsai.
                 </p>
@@ -300,7 +300,7 @@ const About = () => {
               />
               <div className="p-4">
                 <h3 className="font-semibold text-lg">Lê Minh Đức</h3>
-                <p className="text-nature-600">Giám đốc vận hành</p>
+                <p className="text-nature-600">makerting</p>
                 <p className="text-sm text-gray-600 mt-2">
                   Phụ trách hoạt động kinh doanh và phát triển quan hệ đối tác.
                 </p>
@@ -315,7 +315,7 @@ const About = () => {
               />
               <div className="p-4">
                 <h3 className="font-semibold text-lg">Phạm Hoài Anh</h3>
-                <p className="text-nature-600">Chuyên gia chăm sóc</p>
+                <p className="text-nature-600">IT</p>
                 <p className="text-sm text-gray-600 mt-2">
                   Chịu trách nhiệm hỗ trợ khách hàng và phát triển hướng dẫn chăm sóc.
                 </p>
