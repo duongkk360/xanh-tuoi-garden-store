@@ -69,9 +69,6 @@ const Navbar = () => {
         </div>
         
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="text-gray-700 hover:text-nature-600">
-            <Search className="w-5 h-5" />
-          </Button>
           <Link to="/cart">
             <Button variant="ghost" size="icon" className="relative text-gray-700 hover:text-nature-600">
               <ShoppingCart className="w-5 h-5" />
